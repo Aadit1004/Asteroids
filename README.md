@@ -1,4 +1,4 @@
-# **Asteroids
+# **Asteroids**
 A recreation of the classic game Asteroids made in Unity
 
 ## About the Project
