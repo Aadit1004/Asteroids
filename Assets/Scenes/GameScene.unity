@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 474761246}
   - component: {fileID: 474761248}
   - component: {fileID: 474761247}
+  - component: {fileID: 474761249}
   m_Layer: 5
   m_Name: SmallStars
   m_TagString: Untagged
@@ -199,6 +200,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 474761245}
   m_CullTransparentMesh: 1
+--- !u!114 &474761249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 474761245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce2c1097ee087d247953fbe9bdc515c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxOpacity: 1
+  minOpacity: 0.16
 --- !u!1 &505899225
 GameObject:
   m_ObjectHideFlags: 0
@@ -421,7 +436,7 @@ GameObject:
   - component: {fileID: 802746476}
   - component: {fileID: 802746478}
   - component: {fileID: 802746479}
-  - component: {fileID: 802746480}
+  - component: {fileID: 802746481}
   m_Layer: 0
   m_Name: SpaceShip
   m_TagString: Untagged
@@ -489,7 +504,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 802746475}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.8129244, y: -1.4217846, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -508,6 +523,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4d38cfa99c136f4b9cc757c4b9f3590, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  missile: {fileID: 8910694905621755595, guid: 01d5e609d78e74e41971b2a41062bcd2, type: 3}
 --- !u!50 &802746479
 Rigidbody2D:
   serializedVersion: 4
@@ -529,8 +545,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &802746480
-BoxCollider2D:
+--- !u!60 &802746481
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -552,9 +568,28 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.29, y: 1.29}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.645, y: -0.45499998}
+      - {x: 0.645, y: -0.225}
+      - {x: 0.405, y: 0.015}
+      - {x: 0.355, y: 0.085}
+      - {x: 0.275, y: 0.114999995}
+      - {x: 0.275, y: 0.405}
+      - {x: 0.195, y: 0.565}
+      - {x: 0.125, y: 0.645}
+      - {x: -0.125, y: 0.645}
+      - {x: -0.175, y: 0.585}
+      - {x: -0.255, y: 0.39499998}
+      - {x: -0.33499998, y: 0.105}
+      - {x: -0.59499997, y: -0.114999995}
+      - {x: -0.645, y: -0.225}
+      - {x: -0.645, y: -0.42499998}
+      - {x: -0.59499997, y: -0.515}
+      - {x: -0.315, y: -0.645}
+      - {x: 0.265, y: -0.645}
+      - {x: 0.345, y: -0.565}
+      - {x: 0.575, y: -0.515}
 --- !u!1 &956861165
 GameObject:
   m_ObjectHideFlags: 0
@@ -954,6 +989,7 @@ GameObject:
   - component: {fileID: 1859350323}
   - component: {fileID: 1859350325}
   - component: {fileID: 1859350324}
+  - component: {fileID: 1859350326}
   m_Layer: 5
   m_Name: BigStars
   m_TagString: Untagged
@@ -1019,3 +1055,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1859350322}
   m_CullTransparentMesh: 1
+--- !u!114 &1859350326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1859350322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce2c1097ee087d247953fbe9bdc515c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxOpacity: 1
+  minOpacity: 0.5

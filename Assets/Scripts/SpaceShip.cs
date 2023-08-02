@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class SpaceShip : MonoBehaviour
@@ -10,6 +9,10 @@ public class SpaceShip : MonoBehaviour
     private float thrustAmount = 1.3f;
     private const float maxThrust = 5;
     private float maxAngularVelocity = 200f;
+
+    [SerializeField] private GameObject missile;
+    private float missileSpeed = 8f;
+    private float spawnDistance = 0.8f;
 
     void Start()
     {
@@ -35,7 +38,6 @@ public class SpaceShip : MonoBehaviour
             {
                 if (Mathf.Abs(rb.angularVelocity) > maxAngularVelocity)
                 {
-                    // If the current angular velocity exceeds the maximum, set the angular velocity to the maximum, preserving the sign
                     rb.angularVelocity = maxAngularVelocity * Mathf.Sign(rb.angularVelocity);
                 }
                 else
@@ -54,7 +56,12 @@ public class SpaceShip : MonoBehaviour
                 {
                     rb.AddForce(GetFacingDirection() * thrustAmount);
                 }
-                
+            }
+            if (Input.GetMouseButtonDown(0))
+            {
+                Vector2 spawnPosition = transform.position + transform.up * spawnDistance;
+                GameObject newMissile = Instantiate(missile, spawnPosition, Quaternion.identity);
+                newMissile.GetComponent<Rigidbody2D>().velocity = GetFacingDirection() * missileSpeed;
             }
         }
     }
