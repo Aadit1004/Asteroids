@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class SpaceShip : MonoBehaviour
 {
-    bool activeGame = true;
-
     private Rigidbody2D rb;
     private float rotationAmount = 40f;
     private float thrustAmount = 1.3f;
@@ -14,14 +12,19 @@ public class SpaceShip : MonoBehaviour
     private float missileSpeed = 8f;
     private float spawnDistance = 0.8f;
 
+    [SerializeField] private GameObject gameManagerObject;
+
+    private GameScript gameManager;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();   
+        gameManager = gameManagerObject.GetComponent<GameScript>();
     }
 
     void Update()
     {
-        if (activeGame)
+        if (gameManager.isGameActive())
         {
             if (Input.GetKey(KeyCode.D))
             {
@@ -33,7 +36,7 @@ public class SpaceShip : MonoBehaviour
                 {
                     rb.AddTorque(-rotationAmount * Time.fixedDeltaTime);
                 }
-            }
+            } // rotate right
             else if (Input.GetKey(KeyCode.A))
             {
                 if (Mathf.Abs(rb.angularVelocity) > maxAngularVelocity)
@@ -44,7 +47,7 @@ public class SpaceShip : MonoBehaviour
                 {
                     rb.AddTorque(rotationAmount * Time.fixedDeltaTime);
                 }
-            }
+            } // rotate left
             if (Input.GetKey(KeyCode.W))
             {
                 //transform.position = (Vector2)transform.position + GetFacingDirection() * distance;
@@ -56,13 +59,13 @@ public class SpaceShip : MonoBehaviour
                 {
                     rb.AddForce(GetFacingDirection() * thrustAmount);
                 }
-            }
+            } // add thrust
             if (Input.GetMouseButtonDown(0))
             {
                 Vector2 spawnPosition = transform.position + transform.up * spawnDistance;
                 GameObject newMissile = Instantiate(missile, spawnPosition, Quaternion.identity);
                 newMissile.GetComponent<Rigidbody2D>().velocity = GetFacingDirection() * missileSpeed;
-            }
+            } // fire missile
         }
     }
 
