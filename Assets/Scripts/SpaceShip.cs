@@ -82,5 +82,11 @@ public class SpaceShip : MonoBehaviour
         {
             //Debug.Log("Collided with boundary");
         }
+        if (other.tag == "AsteroidBig" || other.tag == "AsteroidSmall")
+        {
+            gameManager.hitAsteroid();
+            Debug.Log("life lost");
+            // any logic for hitting asteroids
+        }
     }
 }

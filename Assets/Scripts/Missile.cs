@@ -23,8 +23,22 @@ public class Missile : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-        
+        if (other.tag == "AsteroidBig")
+        {
+            // animation for defeating asteroid
+            // update score accordingly
+            Destroy(this.gameObject);
+            Debug.Log("Hit big asteroid");
+        }
+        if (other.tag == "AsteroidSmall")
+        {
+            // animation for defeating asteroid
+            // update score accordingly
+            Destroy(this.gameObject);
+            Debug.Log("Hit small asteroid");
+        }
         // if other is asteroid, destroy it and add to score
+        // destroy missle as well
 
     }
 }

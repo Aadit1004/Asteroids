@@ -8,6 +8,7 @@ public class GameUI : MonoBehaviour
     private GameScript gameScript;
 
     [SerializeField] private GameObject mainMenuUi;
+    [SerializeField] private GameObject inGameUi;
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +20,7 @@ public class GameUI : MonoBehaviour
     {
         mainMenuUi.gameObject.SetActive(false);
         gameScript.startGame();
+        inGameUi.gameObject.SetActive(true);
     }
 
     public void OnApplicationQuit()
