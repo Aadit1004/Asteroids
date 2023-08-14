@@ -53,6 +53,7 @@ public class GameScript : MonoBehaviour
         spaceShip.gameObject.SetActive(false);
         resetShipPosition();
         lives = 3;
+        score = 0;
     }
 
     private void resetShipPosition()
@@ -61,19 +62,33 @@ public class GameScript : MonoBehaviour
         spaceShip.transform.rotation = startRotation;
     }
 
+    [SerializeField] private GameObject endScreen;
+    public TMP_Text endScreenScoreText;
+    public TMP_Text endScreenHighestScoreText;
+
     private void checkLives()
     {
         if (lives == 0)
         {
             // death animation and sound of ship
+            endScreenScoreText.text = "Score: " + score;
+            endScreenHighestScoreText.text = "Highest Score: " + 0;
             resetGame();
             inGameUi.gameObject.SetActive(false);
-            mainMenuUi.SetActive(true);
+            endScreen.SetActive(true);
         }
     }
 
     public void hitAsteroid()
     {
         lives--;
+    }
+    public void hitBigAsteroid()
+    {
+        score += 100;
+    }
+    public void hitSmallAsteroid()
+    {
+        score += 25;
     }
 }

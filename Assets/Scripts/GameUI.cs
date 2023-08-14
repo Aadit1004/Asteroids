@@ -9,8 +9,10 @@ public class GameUI : MonoBehaviour
 
     [SerializeField] private GameObject mainMenuUi;
     [SerializeField] private GameObject inGameUi;
+    [SerializeField] private GameObject endScreenUi;
 
-    // Start is called before the first frame update
+    // Main Menu
+
     void Start()
     {
         gameScript = GameManager.GetComponent<GameScript>();
@@ -26,5 +28,23 @@ public class GameUI : MonoBehaviour
     public void OnApplicationQuit()
     {
         Application.Quit();
+    }
+
+
+    // End Screen
+
+    public void OnPlayAgainButton()
+    {
+        endScreenUi.gameObject.SetActive(false);
+        mainMenuUi.gameObject.SetActive(false);
+        inGameUi.gameObject.SetActive(true);
+        gameScript.startGame();
+    }
+
+    public void OnMainMenuButton()
+    {
+        endScreenUi.gameObject.SetActive(false);
+        inGameUi.gameObject.SetActive(false);
+        mainMenuUi.gameObject.SetActive(true);
     }
 }

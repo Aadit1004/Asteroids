@@ -2,17 +2,13 @@ using UnityEngine;
 
 public class Missile : MonoBehaviour
 {
+    public GameObject gameManager;
+    private GameScript gameScript;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        gameScript = gameManager.GetComponent<GameScript>();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -25,20 +21,16 @@ public class Missile : MonoBehaviour
         }
         if (other.tag == "AsteroidBig")
         {
-            // animation for defeating asteroid
-            // update score accordingly
+            gameScript.hitBigAsteroid();
             Destroy(this.gameObject);
-            Debug.Log("Hit big asteroid");
+            //Destroy(other.gameObject);
         }
         if (other.tag == "AsteroidSmall")
         {
-            // animation for defeating asteroid
-            // update score accordingly
+            gameScript.hitSmallAsteroid();
             Destroy(this.gameObject);
-            Debug.Log("Hit small asteroid");
+            //Destroy(other.gameObject);
         }
-        // if other is asteroid, destroy it and add to score
-        // destroy missle as well
 
     }
 }
