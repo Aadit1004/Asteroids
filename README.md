@@ -7,7 +7,7 @@ Void Rocks is a 2D space shooter game inspired by the classic 2D game [Asteroids
 
 
 ## Features
-Instead of just the classic Asteroids game, I thought I would add more unique features. 
+This project aims to expand upon the traditional "Asteroids" game by introducing enhanced space threats, power-ups, and diversified challenges.
 
 ### Game Modes
 Three distinct gameplay modes have been developed to test player's skills and to provide differentiated gameplay experiences:
@@ -15,7 +15,7 @@ Three distinct gameplay modes have been developed to test player's skills and to
 - #### Normal
   - A standard gameplay iteration, offering players three lives with an unrestricted time frame to achieve the highest scores.
 - #### Time Attack
-  - A time-constrained mode designed to test player adaptability under temporal pressure. Players can select challenge durations: 1, 3, or 5 minutes, each with a standard three-life configuration.
+  - A time-constrained mode designed to test player adaptability under temporal pressure. Players can select challenge durations: 1, 3, or 5 minutes, each accompanied by three lives.
 - #### Survival
   - An endurance-focused mode, challenging players to obtain the highest possible score while operating under the constraint of a single life.
     
@@ -35,6 +35,6 @@ Several power-ups have been crafted to provide players with periodic enhancement
 - #### Shield
   - A protective overlay implemented to temporarily safeguard the player's spacecraft against Asteroids and Space Bombs while active.
 - #### Rapid Burst
-  - An enhancement to the spacecraft's firing mechanism. The Spaceship has a rapid-fire mechanism allowing for accelerate missile duration. 
+  - An enhancement to the spacecraft's firing mechanism. The Spaceship has a rapid-fire mechanism allowing for accelerated missile firing. 
 - #### Slow Motion
   - A rare but powerful enhancement to momentarily slowing down all the on-screen threats. While the player's spacecraft maintains its standard speed, the player gains a tactical advantage in navigation and targeting.
