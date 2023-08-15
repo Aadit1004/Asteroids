@@ -10,6 +10,7 @@ public class GameUI : MonoBehaviour
     [SerializeField] private GameObject mainMenuUi;
     [SerializeField] private GameObject inGameUi;
     [SerializeField] private GameObject endScreenUi;
+    [SerializeField] private GameObject highScoreUi;
 
     // Main Menu
 
@@ -46,5 +47,19 @@ public class GameUI : MonoBehaviour
         endScreenUi.gameObject.SetActive(false);
         inGameUi.gameObject.SetActive(false);
         mainMenuUi.gameObject.SetActive(true);
+    }
+
+    // High scores
+
+    public void OnHighScore()
+    {
+        mainMenuUi.SetActive(false);
+        highScoreUi.gameObject.SetActive(true);
+    }
+
+    public void OnHighScoreMainMenu()
+    {
+        highScoreUi.gameObject.SetActive(false);
+        mainMenuUi.SetActive(true);
     }
 }

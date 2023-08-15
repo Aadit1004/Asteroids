@@ -49,6 +49,7 @@ public class GameScript : MonoBehaviour
 
     public void startGame()
     {
+        hideCursor();
         isGameOn = true;
         spaceShip.gameObject.SetActive(true);
         resetShipPosition();
@@ -96,6 +97,7 @@ public class GameScript : MonoBehaviour
             resetGame();
             inGameUi.gameObject.SetActive(false);
             endScreen.SetActive(true);
+            showCursor();
         }
     }
 
@@ -122,5 +124,17 @@ public class GameScript : MonoBehaviour
         yield return new WaitForSeconds(3f);
         resetShipPosition();
         if (isGameActive()) spaceShip.gameObject.SetActive(true);
+    }
+
+    public void hideCursor()
+    {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    public void showCursor()
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 }
