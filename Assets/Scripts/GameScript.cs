@@ -15,12 +15,16 @@ public class GameScript : MonoBehaviour
 
     [SerializeField] private TMP_Text scoreText;
     [SerializeField] private TMP_Text livesText;
-    
+
+    [SerializeField] private GameObject spawnerObj;
+    private AsteroidSpawner spawner;
+
     // Start is called before the first frame update
     void Start()
     {
         startPosition = spaceShip.transform.position;
         startRotation = spaceShip.transform.rotation;
+        spawner = spawnerObj.GetComponent<AsteroidSpawner>();
     }
 
     private void FixedUpdate()
@@ -45,12 +49,15 @@ public class GameScript : MonoBehaviour
         isGameOn = true;
         spaceShip.gameObject.SetActive(true);
         resetShipPosition();
+        // start spawners
+        spawner.startSpawner(); // temp
     }
 
     private void resetGame()
     {
         isGameOn = false;
         spaceShip.gameObject.SetActive(false);
+        spawner.resetSpawner();
         resetShipPosition();
         lives = 3;
         score = 0;

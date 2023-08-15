@@ -23,13 +23,13 @@ public class Missile : MonoBehaviour
         {
             gameScript.hitBigAsteroid();
             Destroy(this.gameObject);
-            //Destroy(other.gameObject);
+            Destroy(other.gameObject);
         }
         if (other.tag == "AsteroidSmall")
         {
             gameScript.hitSmallAsteroid();
             Destroy(this.gameObject);
-            //Destroy(other.gameObject);
+            Destroy(other.gameObject);
         }
 
     }
