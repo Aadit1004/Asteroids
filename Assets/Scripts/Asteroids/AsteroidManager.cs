@@ -8,8 +8,6 @@ public class AsteroidManager : MonoBehaviour
     private int currentAsteroids = 0;
     private List<GameObject> lofAsteroid = new List<GameObject>();
 
-    [SerializeField] private TMP_Text asteroidNumText;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +17,7 @@ public class AsteroidManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        asteroidNumText.text = "# of Asteroids: " + currentAsteroids;
+        
     }
 
     public int getMaxAsteroids() { return  maxAsteroids; }
