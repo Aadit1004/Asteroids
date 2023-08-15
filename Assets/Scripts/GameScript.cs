@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -16,15 +17,17 @@ public class GameScript : MonoBehaviour
     [SerializeField] private TMP_Text scoreText;
     [SerializeField] private TMP_Text livesText;
 
-    [SerializeField] private GameObject spawnerObj;
-    private AsteroidSpawner spawner;
+    public GameObject[] Spawners;
+
+    [SerializeField] private GameObject AsteroidManagerObj;
+    private AsteroidManager asteroidManager;
 
     // Start is called before the first frame update
     void Start()
     {
         startPosition = spaceShip.transform.position;
         startRotation = spaceShip.transform.rotation;
-        spawner = spawnerObj.GetComponent<AsteroidSpawner>();
+        asteroidManager = AsteroidManagerObj.GetComponent<AsteroidManager>();
     }
 
     private void FixedUpdate()
@@ -50,14 +53,24 @@ public class GameScript : MonoBehaviour
         spaceShip.gameObject.SetActive(true);
         resetShipPosition();
         // start spawners
-        spawner.startSpawner(); // temp
+        for (int i = 0; i < Spawners.Length; i++)
+        {
+            AsteroidSpawner spawner = Spawners[i].GetComponent<AsteroidSpawner>();
+            spawner.startSpawner();
+        }
     }
 
     private void resetGame()
     {
         isGameOn = false;
         spaceShip.gameObject.SetActive(false);
-        spawner.resetSpawner();
+        asteroidManager.clearAsteroidsList();
+        for (int i = 0; i < Spawners.Length; i++)
+        {
+            AsteroidSpawner spawner = Spawners[i].GetComponent<AsteroidSpawner>();
+            spawner.resetSpawner();
+        }
+        // remove all asteroids
         resetShipPosition();
         lives = 3;
         score = 0;
@@ -97,5 +110,17 @@ public class GameScript : MonoBehaviour
     public void hitSmallAsteroid()
     {
         score += 25;
+    }
+
+    public void respawnShip()
+    {
+        spaceShip.gameObject.SetActive(false);
+        StartCoroutine(delayRespawn());
+    }
+    private IEnumerator delayRespawn()
+    {
+        yield return new WaitForSeconds(3f);
+        resetShipPosition();
+        if (isGameActive()) spaceShip.gameObject.SetActive(true);
     }
 }

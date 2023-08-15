@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class SpaceShip : MonoBehaviour
@@ -16,17 +17,21 @@ public class SpaceShip : MonoBehaviour
 
     private GameScript gameManager;
 
+    [SerializeField] private GameObject AsteroidManagerObj;
+    private AsteroidManager asteroidManager;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();   
         gameManager = gameManagerObject.GetComponent<GameScript>();
+        asteroidManager = AsteroidManagerObj.GetComponent<AsteroidManager>();
     }
 
     void Update()
     {
         if (gameManager.isGameActive())
         {
-            if (Input.GetKey(KeyCode.D))
+            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
             {
                 if (Mathf.Abs(rb.angularVelocity) > maxAngularVelocity)
                 {
@@ -37,7 +42,7 @@ public class SpaceShip : MonoBehaviour
                     rb.AddTorque(-rotationAmount * Time.fixedDeltaTime);
                 }
             } // rotate right
-            else if (Input.GetKey(KeyCode.A))
+            else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
             {
                 if (Mathf.Abs(rb.angularVelocity) > maxAngularVelocity)
                 {
@@ -48,7 +53,7 @@ public class SpaceShip : MonoBehaviour
                     rb.AddTorque(rotationAmount * Time.fixedDeltaTime);
                 }
             } // rotate left
-            if (Input.GetKey(KeyCode.W))
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
             {
                 //transform.position = (Vector2)transform.position + GetFacingDirection() * distance;
                 if (rb.velocity.magnitude > maxThrust)
@@ -60,7 +65,7 @@ public class SpaceShip : MonoBehaviour
                     rb.AddForce(GetFacingDirection() * thrustAmount);
                 }
             } // add thrust
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
             {
                 Vector2 spawnPosition = transform.position + transform.up * spawnDistance;
                 GameObject newMissile = Instantiate(missile, spawnPosition, Quaternion.identity);
@@ -85,7 +90,10 @@ public class SpaceShip : MonoBehaviour
         if (other.tag == "AsteroidBig" || other.tag == "AsteroidSmall")
         {
             gameManager.hitAsteroid();
-            Debug.Log("life lost");
+            asteroidManager.removeAsteroid(other);
+            //Debug.Log("life lost");
+            Destroy(other.gameObject);
+            gameManager.respawnShip();
             // any logic for hitting asteroids
         }
     }

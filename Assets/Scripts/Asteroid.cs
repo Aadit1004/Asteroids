@@ -19,7 +19,7 @@ public class Asteroid : MonoBehaviour
 
         if (other.tag == "AsteroidBoundary") 
         {
-            asteroidManager.removeAsteroid();
+            asteroidManager.removeAsteroid(this.gameObject);
             Destroy(this.gameObject);
         }
     }

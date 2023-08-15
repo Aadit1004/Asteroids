@@ -541,7 +541,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0.05
+  m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -701,7 +701,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0.05
+  m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -731,6 +731,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 188191942}
+  - component: {fileID: 188191943}
   m_Layer: 0
   m_Name: AsteroidSpawner1
   m_TagString: Untagged
@@ -753,6 +754,23 @@ Transform:
   m_Father: {fileID: 191196805}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &188191943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 188191941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3047743e313e527468bd8d1af17f8ccc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bigAsteroid: {fileID: 95367912}
+  smallAsteroid: {fileID: 140158721}
+  AsteroidManagerObj: {fileID: 509323518}
+  angleMin: 300
+  angleMax: 330
 --- !u!1 &191196804
 GameObject:
   m_ObjectHideFlags: 0
@@ -797,6 +815,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 284561195}
+  - component: {fileID: 284561196}
   m_Layer: 0
   m_Name: AsteroidSpawner3
   m_TagString: Untagged
@@ -819,6 +838,23 @@ Transform:
   m_Father: {fileID: 191196805}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &284561196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 284561194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3047743e313e527468bd8d1af17f8ccc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bigAsteroid: {fileID: 95367912}
+  smallAsteroid: {fileID: 140158721}
+  AsteroidManagerObj: {fileID: 509323518}
+  angleMin: 120
+  angleMax: 150
 --- !u!1 &300312770
 GameObject:
   m_ObjectHideFlags: 0
@@ -849,6 +885,7 @@ RectTransform:
   m_Children:
   - {fileID: 875380382}
   - {fileID: 351521851}
+  - {fileID: 768235039}
   m_Father: {fileID: 1117137396}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -866,6 +903,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 318570597}
+  - component: {fileID: 318570598}
   m_Layer: 0
   m_Name: AsteroidSpawner4
   m_TagString: Untagged
@@ -888,6 +926,23 @@ Transform:
   m_Father: {fileID: 191196805}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &318570598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 318570596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3047743e313e527468bd8d1af17f8ccc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bigAsteroid: {fileID: 95367912}
+  smallAsteroid: {fileID: 140158721}
+  AsteroidManagerObj: {fileID: 509323518}
+  angleMin: 210
+  angleMax: 240
 --- !u!1 &351521850
 GameObject:
   m_ObjectHideFlags: 0
@@ -1324,6 +1379,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d988b9e56eb03f54d809237781f1fa64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxAsteroids: 15
+  asteroidNumText: {fileID: 768235041}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1762,6 +1819,163 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 739669292}
   m_CullTransparentMesh: 1
+--- !u!1 &768235038
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 768235039}
+  - component: {fileID: 768235042}
+  - component: {fileID: 768235041}
+  - component: {fileID: 768235040}
+  m_Layer: 5
+  m_Name: NumOfAsteroids
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &768235039
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 768235038}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 300312771}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -269.1, y: -197.99998}
+  m_SizeDelta: {x: 260, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!223 &768235040
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 768235038}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_SortingLayerID: 0
+  m_SortingOrder: 1
+  m_TargetDisplay: 0
+--- !u!114 &768235041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 768235038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: '# of Asteroids: 0'
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 2cea201834972af4aaeeb048155674cb, type: 2}
+  m_sharedMaterial: {fileID: 4028407511596972081, guid: 2cea201834972af4aaeeb048155674cb, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 30
+  m_fontSizeBase: 30
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &768235042
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 768235038}
+  m_CullTransparentMesh: 1
 --- !u!1 &771100875
 GameObject:
   m_ObjectHideFlags: 0
@@ -1844,8 +2058,8 @@ MonoBehaviour:
   bigAsteroid: {fileID: 95367912}
   smallAsteroid: {fileID: 140158721}
   AsteroidManagerObj: {fileID: 509323518}
-  angle1: {x: 1, y: 1}
-  angle2: {x: 1, y: -1}
+  angleMin: 0
+  angleMax: 0
 --- !u!1 &802746475
 GameObject:
   m_ObjectHideFlags: 0
@@ -1947,6 +2161,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   missile: {fileID: 4814428264348312796}
   gameManagerObject: {fileID: 904906362}
+  AsteroidManagerObj: {fileID: 509323518}
 --- !u!50 &802746479
 Rigidbody2D:
   serializedVersion: 4
@@ -2560,7 +2775,12 @@ MonoBehaviour:
   inGameUi: {fileID: 300312770}
   scoreText: {fileID: 875380383}
   livesText: {fileID: 351521852}
-  spawnerObj: {fileID: 796277583}
+  Spawners:
+  - {fileID: 188191941}
+  - {fileID: 1874061843}
+  - {fileID: 284561194}
+  - {fileID: 318570596}
+  AsteroidManagerObj: {fileID: 509323518}
   endScreen: {fileID: 1807392277}
   endScreenScoreText: {fileID: 44820269}
   endScreenHighestScoreText: {fileID: 1910232441}
@@ -3901,6 +4121,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1874061844}
+  - component: {fileID: 1874061845}
   m_Layer: 0
   m_Name: AsteroidSpawner2
   m_TagString: Untagged
@@ -3923,6 +4144,23 @@ Transform:
   m_Father: {fileID: 191196805}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1874061845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874061843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3047743e313e527468bd8d1af17f8ccc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bigAsteroid: {fileID: 95367912}
+  smallAsteroid: {fileID: 140158721}
+  AsteroidManagerObj: {fileID: 509323518}
+  angleMin: 30
+  angleMax: 60
 --- !u!1 &1906188026
 GameObject:
   m_ObjectHideFlags: 0
@@ -4367,3 +4605,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 904906362}
+  AsteroidManagerObj: {fileID: 509323518}

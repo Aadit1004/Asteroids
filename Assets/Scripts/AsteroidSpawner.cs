@@ -8,8 +8,10 @@ public class AsteroidSpawner : MonoBehaviour
     [SerializeField] private GameObject smallAsteroid;
     [SerializeField] private GameObject AsteroidManagerObj;
     private AsteroidManager asteroidManager;
-    [SerializeField] private Vector2 angle1;
-    [SerializeField] private Vector2 angle2;
+
+    // degrees (as unit circle {0/360 to right, 180 to left})
+    [SerializeField] private float angleMin;  
+    [SerializeField] private float angleMax;  
 
     // Start is called before the first frame update
     void Start()
@@ -32,16 +34,17 @@ public class AsteroidSpawner : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(3f);
-            if (asteroidManager.getAsteroids() == 0 || (asteroidManager.getAsteroids() - 2 < asteroidManager.getMaxAsteroids())) // added leeway
+            yield return new WaitForSeconds(Random.Range(2, 6)); // wait 2 to 5 seconds
+            if (asteroidManager.getAsteroids() < asteroidManager.getMaxAsteroids()) 
             {
-                asteroidManager.addAsteroid();
                 int astVal = Random.Range(0, 2);
-                GameObject ast = (astVal == 0) ? bigAsteroid : smallAsteroid;
+                GameObject ast = (astVal == 0) ? bigAsteroid : smallAsteroid; // random choice of small or big asteroids
                 Vector3 spawnPos = transform.position;
                 GameObject newAst = Instantiate(ast, spawnPos, Quaternion.identity);
+                asteroidManager.addAsteroid(newAst);
                 Vector2 direction = getDirection();
-                newAst.GetComponent<Rigidbody2D>().velocity = new Vector2(direction.x, direction.y) * Random.Range(1, 5);
+                float astSpeed = Random.Range(1f, 3f);
+                newAst.GetComponent<Rigidbody2D>().velocity = new Vector2(direction.x, direction.y) * astSpeed;
                 newAst.GetComponent<Rigidbody2D>().AddTorque(Random.Range(10, 40));
             }
         }
@@ -49,7 +52,8 @@ public class AsteroidSpawner : MonoBehaviour
 
     private Vector2 getDirection()
     {
-        return new Vector2(Random.Range(angle1.x, angle2.x), Random.Range(angle1.y, angle2.y));
+        float randomAngle = Random.Range(angleMin, angleMax) * Mathf.Deg2Rad;  // Convert angle to radians
+        return new Vector2(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle));
     }
 
     public void resetSpawner()
