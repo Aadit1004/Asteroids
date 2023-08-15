@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AsteroidManager : MonoBehaviour
 {
-    [Range(15, 20)] public int maxAsteroids;
+    [Range(10, 20)] public int maxAsteroids;
     private int currentAsteroids = 0;
     private List<GameObject> lofAsteroid = new List<GameObject>();
 

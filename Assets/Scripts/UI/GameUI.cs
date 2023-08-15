@@ -28,6 +28,12 @@ public class GameUI : MonoBehaviour
 
     public void OnApplicationQuit()
     {
+        gameScript.saveData();
+    }
+
+    public void OnQuit()
+    {
+        gameScript.saveData();
         Application.Quit();
     }
 

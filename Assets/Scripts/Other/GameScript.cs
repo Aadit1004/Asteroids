@@ -22,12 +22,17 @@ public class GameScript : MonoBehaviour
     [SerializeField] private GameObject AsteroidManagerObj;
     private AsteroidManager asteroidManager;
 
+    private int[] highscores = new int[5];
+    [SerializeField] private GameObject highscoreUiParent;
+
     // Start is called before the first frame update
     void Start()
     {
         startPosition = spaceShip.transform.position;
         startRotation = spaceShip.transform.rotation;
         asteroidManager = AsteroidManagerObj.GetComponent<AsteroidManager>();
+        for (int i = 0; i < highscores.Length; i++) highscores[i] = 0;
+        loadData();
     }
 
     private void FixedUpdate()
@@ -92,8 +97,9 @@ public class GameScript : MonoBehaviour
         if (lives == 0)
         {
             // death animation and sound of ship
+            updateScores(score);
             endScreenScoreText.text = "Score: " + score;
-            endScreenHighestScoreText.text = "Highest Score: " + 0;
+            endScreenHighestScoreText.text = "Highest Score: " + highscores[0];
             resetGame();
             inGameUi.gameObject.SetActive(false);
             endScreen.SetActive(true);
@@ -121,7 +127,7 @@ public class GameScript : MonoBehaviour
     }
     private IEnumerator delayRespawn()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
         resetShipPosition();
         if (isGameActive()) spaceShip.gameObject.SetActive(true);
     }
@@ -136,5 +142,70 @@ public class GameScript : MonoBehaviour
     {
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+    }
+
+    public void saveData()
+    {
+        PlayerPrefs.SetString("score1", highscores[0].ToString());
+        PlayerPrefs.SetString("score2", highscores[1].ToString());
+        PlayerPrefs.SetString("score3", highscores[2].ToString());
+        PlayerPrefs.SetString("score4", highscores[3].ToString());
+        PlayerPrefs.SetString("score5", highscores[4].ToString());
+        PlayerPrefs.Save();
+    }
+
+    public void loadData()
+    {
+        if (PlayerPrefs.HasKey("score1"))
+        {
+            highscores[0] = int.Parse(PlayerPrefs.GetString("score1"));
+        }
+        if (PlayerPrefs.HasKey("score2"))
+        {
+            highscores[1] = int.Parse(PlayerPrefs.GetString("score2"));
+        }
+        if (PlayerPrefs.HasKey("score3"))
+        {
+            highscores[2] = int.Parse(PlayerPrefs.GetString("score3"));
+        }
+        if (PlayerPrefs.HasKey("score4"))
+        {
+            highscores[3] = int.Parse(PlayerPrefs.GetString("score4"));
+        }
+        if (PlayerPrefs.HasKey("score5"))
+        {
+            highscores[4] = int.Parse(PlayerPrefs.GetString("score5"));
+        }
+        updateScoresUi();
+    }
+
+    public void updateScores(int newScore)
+    {
+        if (newScore <= highscores[4]) return;
+        // O(n) runtime
+        for (int i = 0; i < highscores.Length; i++)
+        {
+            if (newScore > highscores[i])
+            {
+                // shift elements down
+                for (int j = highscores.Length - 2; j > i; j--)
+                {
+                    highscores[j + 1] = highscores[j];
+                }
+                //update new scores
+                highscores[i] = newScore;
+                break;
+            }
+        }
+        updateScoresUi();
+    }
+
+    public void updateScoresUi()
+    {
+        // O(n) runtime to update text scores
+        for (int i = 0; i < highscores.Length; i++)
+        {
+            highscoreUiParent.transform.GetChild(i).GetComponent<TMP_Text>().text = (i + 1).ToString() + ". " + highscores[i];
+        }
     }
 }
