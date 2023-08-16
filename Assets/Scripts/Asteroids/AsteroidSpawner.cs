@@ -19,12 +19,6 @@ public class AsteroidSpawner : MonoBehaviour
         asteroidManager = AsteroidManagerObj.GetComponent<AsteroidManager>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void startSpawner()
     {
         StartCoroutine(shootAsteroid());

@@ -8,6 +8,8 @@ public class GameUI : MonoBehaviour
     [SerializeField] private GameObject GameManager;
     private GameScript gameScript;
 
+
+    // Main UI gameObjs
     [SerializeField] private GameObject mainMenuUi;
     [SerializeField] private GameObject inGameUi;
     [SerializeField] private GameObject endScreenUi;
@@ -28,6 +30,9 @@ public class GameUI : MonoBehaviour
     [SerializeField] private TMP_Text time5ButtonText;
     [SerializeField] private TMP_Text survivalButtonText;
 
+
+    // Other
+    [SerializeField] private GameObject newHighScoreObj;
 
     // Main Menu
 
@@ -69,6 +74,7 @@ public class GameUI : MonoBehaviour
     public void OnPlayAgainButton()
     {
         endScreenUi.gameObject.SetActive(false);
+        newHighScoreObj.gameObject.SetActive(false);
         mainMenuUi.gameObject.SetActive(false);
         inGameUi.gameObject.SetActive(true);
         gameScript.startGame(gameScript.getCurrentMode());
@@ -77,6 +83,7 @@ public class GameUI : MonoBehaviour
     public void OnMainMenuButton()
     {
         endScreenUi.gameObject.SetActive(false);
+        newHighScoreObj.gameObject.SetActive(false);
         inGameUi.gameObject.SetActive(false);
         mainMenuUi.gameObject.SetActive(true);
     }

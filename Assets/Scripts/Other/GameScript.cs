@@ -41,6 +41,11 @@ public class GameScript : MonoBehaviour
     private const float timeAttack5TimeLimit = 300f;
     [SerializeField] private TMP_Text timerText;
     private float timeRemaining;
+    private bool isTimed = false;
+
+    [SerializeField] private GameObject newHighScoreObj;
+
+    public ParticleSystem explosion;
 
     // Start is called before the first frame update
     void Start()
@@ -84,18 +89,22 @@ public class GameScript : MonoBehaviour
             AsteroidSpawner spawner = Spawners[i].GetComponent<AsteroidSpawner>();
             spawner.startSpawner();
         }
+        isTimed = false;
         if (gameMode == GameMode.TimeAttack1)
         {
+            isTimed = true;
             timerText.gameObject.SetActive(true);
             StartTimer(timeAttack1TimeLimit);
         } 
         else if (gameMode == GameMode.TimeAttack3)
         {
+            isTimed = true;
             timerText.gameObject.SetActive(true);
             StartTimer(timeAttack3TimeLimit);
         } 
         else if (gameMode == GameMode.TimeAttack5)
         {
+            isTimed = true;
             timerText.gameObject.SetActive(true);
             StartTimer(timeAttack5TimeLimit);
         }
@@ -134,6 +143,7 @@ public class GameScript : MonoBehaviour
         resetShipPosition();
         lives = 3;
         score = 0;
+        isTimed = false;
     }
 
     private void resetShipPosition()
@@ -148,7 +158,7 @@ public class GameScript : MonoBehaviour
 
     private void checkLives()
     {
-        if (lives == 0 || (isGameActive() && timeRemaining == 0f))
+        if (lives == 0 || (isGameActive() && timeRemaining == 0f && isTimed))
         {
             // death animation and sound of ship
             updateScores(score, currentMode);
@@ -195,14 +205,41 @@ public class GameScript : MonoBehaviour
 
     public void respawnShip()
     {
+        this.explosion.transform.position = spaceShip.transform.position;
         spaceShip.gameObject.SetActive(false);
+        this.explosion.Play();
         StartCoroutine(delayRespawn());
     }
     private IEnumerator delayRespawn()
     {
         yield return new WaitForSeconds(2f);
         resetShipPosition();
-        if (isGameActive()) spaceShip.gameObject.SetActive(true);
+        if (isGameActive())
+        {
+            spaceShip.gameObject.SetActive(true);
+            StartCoroutine(respawnVuln());
+        }
+    }
+
+    [SerializeField] private TMP_Text respawnProtectionText;
+    private bool canCollideThreats = true;
+    public bool canCollideWithThreats() { return canCollideThreats;  }
+    private IEnumerator respawnVuln()
+    {
+        float remainingProtectionTime = 3f;
+        //spaceShip.GetComponent<PolygonCollider2D>().enabled = false;
+        canCollideThreats = false;
+        respawnProtectionText.gameObject.SetActive(true);
+        while (remainingProtectionTime > 0)
+        {
+            respawnProtectionText.text = $"Respawn Protection: {remainingProtectionTime:0.000}";
+            yield return null; // Wait for the next frame
+            remainingProtectionTime -= Time.deltaTime;
+        }
+        respawnProtectionText.text = "Respawn Protection: 0.000";
+        //spaceShip.GetComponent<PolygonCollider2D>().enabled = true;
+        canCollideThreats = true;
+        respawnProtectionText.gameObject.SetActive(false);
     }
 
     public void hideCursor()
@@ -252,25 +289,52 @@ public class GameScript : MonoBehaviour
         updateScoresUi();
     }
 
+    private bool newHighScore = false;
+
     public void updateScores(int newScore, GameMode mode)
     {
         switch (mode)
         {
             case GameMode.Classic:
-                if (newScore > highscores[0]) highscores[0] = newScore;
+                if (newScore > highscores[0])
+                {
+                    newHighScore = true;
+                    highscores[0] = newScore;
+                }
                 break;
             case GameMode.TimeAttack1:
-                if (newScore > highscores[1]) highscores[1] = newScore;
+                if (newScore > highscores[1])
+                {
+                    newHighScore = true;
+                    highscores[1] = newScore;
+                }
                 break;
             case GameMode.TimeAttack3:
-                if (newScore > highscores[2]) highscores[2] = newScore;
+                if (newScore > highscores[2])
+                {
+                    newHighScore = true;
+                    highscores[2] = newScore;
+                }
                 break;
             case GameMode.TimeAttack5:
-                if (newScore > highscores[3]) highscores[3] = newScore;
+                if (newScore > highscores[3])
+                {
+                    newHighScore = true;
+                    highscores[3] = newScore;
+                }
                 break;
             case GameMode.Survival:
-                if (newScore > highscores[4]) highscores[4] = newScore;
+                if (newScore > highscores[4])
+                {
+                    newHighScore = true;
+                    highscores[4] = newScore;
+                }
                 break;
+        }
+        if (newHighScore)
+        {
+            newHighScoreObj.gameObject.SetActive(true);
+            newHighScore = false;
         }
         updateScoresUi();
     }
