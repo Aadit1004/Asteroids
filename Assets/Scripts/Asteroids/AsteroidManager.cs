@@ -5,6 +5,7 @@ using UnityEngine;
 public class AsteroidManager : MonoBehaviour
 {
     [Range(10, 20)] public int maxAsteroids;
+    private int tempMax;
     private int currentAsteroids = 0;
     private List<GameObject> lofAsteroid = new List<GameObject>();
 
@@ -12,6 +13,7 @@ public class AsteroidManager : MonoBehaviour
     void Start()
     {
         currentAsteroids = 0;
+        tempMax = maxAsteroids;
     }
 
     // Update is called once per frame
@@ -42,5 +44,9 @@ public class AsteroidManager : MonoBehaviour
         lofAsteroid.Clear();
         currentAsteroids = 0;
     }
+
+    // when black hole or space bomb is there -> reduce max asteroids
+    public void setMaxAsteroids(int newMax) { maxAsteroids = newMax; }
+    public void resetMaxAsteroids() { maxAsteroids = tempMax; }
 
 }
