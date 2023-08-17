@@ -32,6 +32,10 @@ public class GameScript : MonoBehaviour
     [SerializeField] private GameObject AsteroidManagerObj;
     private AsteroidManager asteroidManager;
 
+    [SerializeField] private GameObject SpacebombManagerObj;
+    private SpaceBombManager spaceBombManager;
+    public GameObject[] spaceBombSpawners;
+
     private int[] highscores = new int[5];
     [SerializeField] private GameObject highscoreUiParent;
 
@@ -53,6 +57,7 @@ public class GameScript : MonoBehaviour
         startPosition = spaceShip.transform.position;
         startRotation = spaceShip.transform.rotation;
         asteroidManager = AsteroidManagerObj.GetComponent<AsteroidManager>();
+        spaceBombManager = SpacebombManagerObj.GetComponent<SpaceBombManager>();
         for (int i = 0; i < highscores.Length; i++) highscores[i] = 0;
         loadData();
     }
@@ -67,7 +72,6 @@ public class GameScript : MonoBehaviour
     {
         scoreText.text = "Score: " + score;
         livesText.text = "Lives " + lives;
-        // timer text
     }
 
     public bool isGameActive()
@@ -88,6 +92,11 @@ public class GameScript : MonoBehaviour
         {
             AsteroidSpawner spawner = Spawners[i].GetComponent<AsteroidSpawner>();
             spawner.startSpawner();
+        }
+        for (int i = 0; i < spaceBombSpawners.Length; i++)
+        {
+            SpaceBombSpawner bombSpawner = spaceBombSpawners[i].GetComponent<SpaceBombSpawner>();
+            bombSpawner.startSpawner();
         }
         isTimed = false;
         if (gameMode == GameMode.TimeAttack1)
@@ -135,10 +144,16 @@ public class GameScript : MonoBehaviour
         timerText.gameObject.SetActive(false);
         spaceShip.gameObject.SetActive(false);
         asteroidManager.clearAsteroidsList();
+        spaceBombManager.clearBombList();
         for (int i = 0; i < Spawners.Length; i++)
         {
             AsteroidSpawner spawner = Spawners[i].GetComponent<AsteroidSpawner>();
             spawner.resetSpawner();
+        }
+        for (int i = 0; i < spaceBombSpawners.Length; i++)
+        {
+            SpaceBombSpawner bombSpawner = spaceBombSpawners[i].GetComponent<SpaceBombSpawner>();
+            bombSpawner.resetSpawner();
         }
         resetShipPosition();
         lives = 3;
@@ -189,7 +204,7 @@ public class GameScript : MonoBehaviour
             showCursor();
         }
     }
-
+    public int getLivesLeft() { return lives; }
     public void hitAsteroid()
     {
         lives--;
@@ -202,6 +217,11 @@ public class GameScript : MonoBehaviour
     {
         score += 25;
     }
+    public void hitSpaceBomb()
+    {
+        score += 50;
+    }
+    public void hitBomb() { lives--; }
 
     public void respawnShip()
     {

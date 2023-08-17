@@ -10,11 +10,15 @@ public class Missile : MonoBehaviour
 
     public ParticleSystem explosion;
 
+    [SerializeField] private GameObject bombManagerObj;
+    private SpaceBombManager spaceBombManager;
+
     // Start is called before the first frame update
     void Awake()
     {
         gameScript = gameManager.GetComponent<GameScript>();
         asteroidManager = AsteroidManagerObj.GetComponent<AsteroidManager>();
+        spaceBombManager = bombManagerObj.GetComponent<SpaceBombManager>();
     }
 
     //private void OnCollisionEnter2D(Collision2D collision)
@@ -79,6 +83,21 @@ public class Missile : MonoBehaviour
             else
             {
                 // play asteroid hit sound
+            }
+            Destroy(this.gameObject);
+        }
+        if (other.tag == "SpaceBomb")
+        {
+            SpaceBomb bombScript = other.GetComponent<SpaceBomb>();
+            bombScript.detuctLife();
+            if (bombScript.getLives() == 0)
+            {
+                // play asteroid explosion sound
+                gameScript.hitSpaceBomb();
+                spaceBombManager.removeBomb(other);
+                Destroy(other.gameObject);
+                this.explosion.transform.position = this.transform.position;
+                this.explosion.Play();
             }
             Destroy(this.gameObject);
         }

@@ -14,9 +14,25 @@ public class SpaceBombManager : MonoBehaviour
         currentBombs = 0;
     }
 
-    // Update is called once per frame
-    void Update()
+    public int getMaxBombs() { return maxBombs; }
+    public void addBomb(GameObject bomb)
     {
-        
+        currentBombs++;
+        lofBomb.Add(bomb);
+    }
+    public void removeBomb(GameObject bomb)
+    {
+        currentBombs--;
+        lofBomb.Remove(bomb);
+    }
+    public int getNumBombs() { return currentBombs; }
+    public void clearBombList()
+    {
+        foreach (var bomb in lofBomb)
+        {
+            Destroy(bomb.gameObject);
+        }
+        lofBomb.Clear();
+        currentBombs = 0;
     }
 }

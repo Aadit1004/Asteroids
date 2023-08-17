@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class SpaceShip : MonoBehaviour
@@ -20,11 +21,17 @@ public class SpaceShip : MonoBehaviour
     [SerializeField] private GameObject AsteroidManagerObj;
     private AsteroidManager asteroidManager;
 
+    [SerializeField] private GameObject bombManagerObj;
+    private SpaceBombManager spaceBombManager;
+
+    public ParticleSystem bombExplosion;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();   
         gameManager = gameManagerObject.GetComponent<GameScript>();
         asteroidManager = AsteroidManagerObj.GetComponent<AsteroidManager>();
+        spaceBombManager = bombManagerObj.GetComponent<SpaceBombManager>();
     }
 
     void Update()
@@ -95,6 +102,16 @@ public class SpaceShip : MonoBehaviour
             Destroy(other.gameObject);
             gameManager.respawnShip();
             // any logic for hitting asteroids
+        }
+        if (other.tag == "SpaceBomb")
+        {
+            gameManager.hitBomb();
+            spaceBombManager.removeBomb(other);
+            bombExplosion.transform.position = other.transform.position;
+            bombExplosion.Play();
+            Destroy(other.gameObject);
+            // double check
+            gameManager.respawnShip();
         }
     }
 }
