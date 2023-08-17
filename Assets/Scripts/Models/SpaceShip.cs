@@ -24,8 +24,6 @@ public class SpaceShip : MonoBehaviour
     [SerializeField] private GameObject bombManagerObj;
     private SpaceBombManager spaceBombManager;
 
-    public ParticleSystem bombExplosion;
-
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();   
@@ -107,8 +105,6 @@ public class SpaceShip : MonoBehaviour
         {
             gameManager.hitBomb();
             spaceBombManager.removeBomb(other);
-            bombExplosion.transform.position = other.transform.position;
-            bombExplosion.Play();
             Destroy(other.gameObject);
             // double check
             gameManager.respawnShip();

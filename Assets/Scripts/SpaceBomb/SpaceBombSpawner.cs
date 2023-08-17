@@ -28,16 +28,19 @@ public class SpaceBombSpawner : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(Random.Range(20, 40)); // wait 20 to 40 seconds
+            yield return new WaitForSeconds(Random.Range(2, 10)); // wait time
             if (spaceBombManager.getNumBombs() < spaceBombManager.getMaxBombs())
             {
                 Vector3 spawnPos = transform.position;
                 GameObject newBomb = Instantiate(spaceBomb, spawnPos, Quaternion.identity);
-                spaceBombManager.addBomb(newBomb);
+               
                 Vector2 direction = getDirection();
                 float bombSpeed = 2f;
                 newBomb.GetComponent<Rigidbody2D>().velocity = new Vector2(direction.x, direction.y) * bombSpeed;
                 newBomb.GetComponent<Rigidbody2D>().AddTorque(Random.Range(10, 20));
+
+                spaceBombManager.addBomb(newBomb);
+                newBomb.GetComponent<SpaceBomb>().startExplosion();
             }
         }
     }
