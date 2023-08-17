@@ -43,7 +43,7 @@ public class SpaceBomb : MonoBehaviour
             explosion.transform.position = transform.position;
             explosion.Play();
         }
-        if ((Vector2.Distance(this.transform.position, spaceship.transform.position) <= 2) && gameManager.canCollideWithThreats())
+        if ((Vector2.Distance(this.transform.position, spaceship.transform.position) <= 2.5f) && gameManager.canCollideWithThreats())
         {
             gameManager.hitBomb();
             spaceshipExplosion.transform.position = spaceship.transform.position;
@@ -79,4 +79,10 @@ public class SpaceBomb : MonoBehaviour
     {
         asteroidManager.resetMaxAsteroids();
     }
+
+    //void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.white;
+    //    Gizmos.DrawWireSphere(transform.position, 2.5f);
+    //}
 }

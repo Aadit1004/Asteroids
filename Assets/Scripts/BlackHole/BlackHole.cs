@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BlackHole : MonoBehaviour
@@ -24,9 +25,13 @@ public class BlackHole : MonoBehaviour
     {
         if (gameManager.isGameActive())
         {
-            if (Vector2.Distance(this.transform.position, spaceShip.transform.position) <= 5)
+            float distance = Vector2.Distance(this.transform.position, spaceShip.transform.position);
+            if (distance <= 5f)
             {
-                Debug.Log("sucking player in black hole");
+                Vector2 direction = (this.transform.position - spaceShip.transform.position).normalized; //  direction from the spaceship to the black hole
+                float forceMagnitude = (5 - distance) * 0.75f; // force magnitude increases as ship gets closer, linear increase
+                Vector2 gravitationalForce = direction * forceMagnitude; // vector of gravity direction
+                spaceShip.GetComponent<Rigidbody2D>().AddForce(gravitationalForce);
             }
         }
     }

@@ -39,7 +39,7 @@ public class BlackHoleSpawner : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(Random.Range(4f, 6f)); // wait time
+            yield return new WaitForSeconds(Random.Range(40f, 50f)); // wait time
             asteroidManager.setMaxAsteroids(3);
             if (blackHoleManager.getNumBlackHoles() < blackHoleManager.getMaxBlackHoles())
             {
