@@ -32,8 +32,9 @@ public class SpaceBombSpawner : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(Random.Range(20, 30)); // wait time
+            yield return new WaitForSeconds(Random.Range(20f, 25f)); // wait time - (20f, 25f) default
             asteroidManager.setMaxAsteroids(6);
+            yield return new WaitForSeconds(3);
             if (spaceBombManager.getNumBombs() < spaceBombManager.getMaxBombs())
             {
                 Vector3 spawnPos = transform.position;
@@ -42,7 +43,10 @@ public class SpaceBombSpawner : MonoBehaviour
                 Vector2 direction = getDirection();
                 float bombSpeed = 2f;
                 newBomb.GetComponent<Rigidbody2D>().velocity = new Vector2(direction.x, direction.y) * bombSpeed;
-                newBomb.GetComponent<Rigidbody2D>().AddTorque(Random.Range(10, 20));
+                float torqueMagnitude = Random.Range(10f, 20f);
+                float torqueDirection = Random.Range(0, 2) == 0 ? 1 : -1;
+                float finalTorque = torqueMagnitude * torqueDirection;
+                newBomb.GetComponent<Rigidbody2D>().AddTorque(finalTorque);
 
                 spaceBombManager.addBomb(newBomb);
                 newBomb.GetComponent<SpaceBomb>().startExplosion();

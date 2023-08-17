@@ -10,6 +10,7 @@ TagManager:
   - AsteroidBoundary
   - SpaceBomb
   - BlackHole
+  - Missile
   layers:
   - Default
   - TransparentFX

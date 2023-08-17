@@ -85,14 +85,18 @@ public class GameScript : MonoBehaviour
         return isGameOn;
     }
 
+    private bool canHaveVuln = true;
+
     public void startGame(GameMode gameMode)
     {
+        canHaveVuln = false;
         currentMode = gameMode;
         lives = (gameMode == GameMode.Survival) ? 1 : 3;
         hideCursor();
         isGameOn = true;
         spaceShip.gameObject.SetActive(true);
         resetShipPosition();
+
         // start spawners
         for (int i = 0; i < Spawners.Length; i++)
         {
@@ -128,6 +132,13 @@ public class GameScript : MonoBehaviour
             timerText.gameObject.SetActive(true);
             StartTimer(timeAttack5TimeLimit);
         }
+        StartCoroutine(smallDelay());
+    }
+
+    private IEnumerator smallDelay()
+    {
+        yield return new WaitForSeconds(1f);
+        canHaveVuln = true;
     }
 
     public void StartTimer(float duration)
@@ -135,7 +146,6 @@ public class GameScript : MonoBehaviour
         timeRemaining = duration;
         StartCoroutine(UpdateTimer());
     }
-
     private IEnumerator UpdateTimer()
     {
         while (timeRemaining > 0)
@@ -167,10 +177,16 @@ public class GameScript : MonoBehaviour
             SpaceBombSpawner bombSpawner = spaceBombSpawners[i].GetComponent<SpaceBombSpawner>();
             bombSpawner.resetSpawner();
         }
+        for (int i = 0; i < blackHoleSpawners.Length; i++)
+        {
+            BlackHoleSpawner bhSpawner = blackHoleSpawners[i].GetComponent<BlackHoleSpawner>();
+            bhSpawner.resetSpawner();
+        }
         resetShipPosition();
         lives = 3;
         score = 0;
         isTimed = false;
+        asteroidManager.resetMaxAsteroids();
     }
 
     private void resetShipPosition()
@@ -234,6 +250,7 @@ public class GameScript : MonoBehaviour
         score += 50;
     }
     public void hitBomb() { lives--; }
+    public void suckedInBlackHolde() { lives--; }
 
     public void respawnShip()
     {
@@ -246,9 +263,11 @@ public class GameScript : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         resetShipPosition();
+        yield return null;
         if (isGameActive())
         {
             spaceShip.gameObject.SetActive(true);
+            if (blackHoleManager.getNumBlackHoles() > 0 && blackHoleManager.getBlackHolesCount() != 0) blackHoleManager.getBlackHole().GetComponent<BlackHole>().resetValueForBlackHole();
             StartCoroutine(respawnVuln());
         }
     }
@@ -258,20 +277,23 @@ public class GameScript : MonoBehaviour
     public bool canCollideWithThreats() { return canCollideThreats;  }
     private IEnumerator respawnVuln()
     {
-        float remainingProtectionTime = 3f;
-        //spaceShip.GetComponent<PolygonCollider2D>().enabled = false;
-        canCollideThreats = false;
-        respawnProtectionText.gameObject.SetActive(true);
-        while (remainingProtectionTime > 0)
+        if (canHaveVuln)
         {
-            respawnProtectionText.text = $"Respawn Protection: {remainingProtectionTime:0.000}";
-            yield return null; // Wait for the next frame
-            remainingProtectionTime -= Time.deltaTime;
+            float remainingProtectionTime = 3f;
+            //spaceShip.GetComponent<PolygonCollider2D>().enabled = false;
+            canCollideThreats = false;
+            respawnProtectionText.gameObject.SetActive(true);
+            while (remainingProtectionTime > 0)
+            {
+                respawnProtectionText.text = $"Respawn Protection: {remainingProtectionTime:0.000}";
+                yield return null; // Wait for the next frame
+                remainingProtectionTime -= Time.deltaTime;
+            }
+            respawnProtectionText.text = "Respawn Protection: 0.000";
+            //spaceShip.GetComponent<PolygonCollider2D>().enabled = true;
+            canCollideThreats = true;
+            respawnProtectionText.gameObject.SetActive(false);
         }
-        respawnProtectionText.text = "Respawn Protection: 0.000";
-        //spaceShip.GetComponent<PolygonCollider2D>().enabled = true;
-        canCollideThreats = true;
-        respawnProtectionText.gameObject.SetActive(false);
     }
 
     public void hideCursor()

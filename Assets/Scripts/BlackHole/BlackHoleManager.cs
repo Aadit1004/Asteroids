@@ -34,4 +34,11 @@ public class BlackHoleManager : MonoBehaviour
         }
         lofBlackHoles.Clear();
     }
+
+    public GameObject getBlackHole()
+    {
+        return lofBlackHoles[0];
+    }
+
+    public int getBlackHolesCount() {  return lofBlackHoles.Count; }
 }

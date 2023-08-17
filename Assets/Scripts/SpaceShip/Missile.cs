@@ -104,9 +104,8 @@ public class Missile : MonoBehaviour
 
         if (other.tag == "BlackHole")
         {
-            //float distance = Vector2.Distance(other.transform.position, this.transform.position);
-            //if (distance < 2)
-            Destroy(this.gameObject);
+            float distance = Vector2.Distance(other.transform.position, this.transform.position);
+            if (distance < 1) Destroy(this.gameObject);
         }
     }
 }

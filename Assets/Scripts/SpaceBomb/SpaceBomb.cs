@@ -22,11 +22,16 @@ public class SpaceBomb : MonoBehaviour
     [SerializeField] private GameObject AsteroidManagerObj;
     private AsteroidManager asteroidManager;
 
+
+    [SerializeField] private GameObject blackHoleManagerObj;
+    private BlackHoleManager blackHoleManager;
+
     void Start()
     {
         spaceBombManager = bombManagerObj.GetComponent<SpaceBombManager>();
         gameManager = gameManagerObject.GetComponent<GameScript>();
         asteroidManager = AsteroidManagerObj.GetComponent<AsteroidManager>();
+        blackHoleManager = blackHoleManagerObj.GetComponent<BlackHoleManager>();
     }
 
     public void startExplosion()
@@ -77,12 +82,6 @@ public class SpaceBomb : MonoBehaviour
 
     private void OnDestroy()
     {
-        asteroidManager.resetMaxAsteroids();
+        if (blackHoleManager.getNumBlackHoles() == 0 && spaceBombManager.getNumBombs() == 0) asteroidManager.resetMaxAsteroids();
     }
-
-    //void OnDrawGizmos()
-    //{
-    //    Gizmos.color = Color.white;
-    //    Gizmos.DrawWireSphere(transform.position, 2.5f);
-    //}
 }

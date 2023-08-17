@@ -28,20 +28,23 @@ public class AsteroidSpawner : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(Random.Range(2, 6)); // wait 2 to 5 seconds
-            if (asteroidManager.getAsteroids() < asteroidManager.getMaxAsteroids()) 
+            yield return new WaitForSeconds(Random.Range(2f, 5f)); // wait time - (2f, 5f) default
+            if (asteroidManager.getAsteroids() < asteroidManager.getMaxAsteroids())
             {
                 int astVal = Random.Range(0, 2);
                 GameObject ast = (astVal == 0) ? bigAsteroid : smallAsteroid; // random choice of small or big asteroids
-                
-                    Vector3 spawnPos = transform.position;
-                    GameObject newAst = Instantiate(ast, spawnPos, Quaternion.identity);
-                    asteroidManager.addAsteroid(newAst);
-                    Vector2 direction = getDirection();
-                    float astSpeed = Random.Range(1f, 3f);
-                    newAst.GetComponent<Rigidbody2D>().velocity = new Vector2(direction.x, direction.y) * astSpeed;
-                    newAst.GetComponent<Rigidbody2D>().AddTorque(Random.Range(10, 40));
-                
+
+                Vector3 spawnPos = transform.position;
+                GameObject newAst = Instantiate(ast, spawnPos, Quaternion.identity);
+                asteroidManager.addAsteroid(newAst);
+                Vector2 direction = getDirection();
+                float astSpeed = Random.Range(1f, 3f);
+                newAst.GetComponent<Rigidbody2D>().velocity = new Vector2(direction.x, direction.y) * astSpeed;
+                float torqueMagnitude = Random.Range(10f, 40f);
+                float torqueDirection = Random.Range(0, 2) == 0 ? 1 : -1;
+                float finalTorque = torqueMagnitude * torqueDirection;
+                newAst.GetComponent<Rigidbody2D>().AddTorque(finalTorque);
+
             }
         }
     }

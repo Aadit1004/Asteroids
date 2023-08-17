@@ -59,7 +59,6 @@ public class SpaceShip : MonoBehaviour
             } // rotate left
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
             {
-                //transform.position = (Vector2)transform.position + GetFacingDirection() * distance;
                 if (rb.velocity.magnitude > maxThrust)
                 {
                     rb.velocity = rb.velocity.normalized * maxThrust;    
@@ -84,6 +83,8 @@ public class SpaceShip : MonoBehaviour
         return new Vector2(Mathf.Cos(radians), Mathf.Sin(radians)); // Return unit vector
     }
 
+    public ParticleSystem[] bombExplosions;
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         GameObject other = collision.gameObject;
@@ -104,6 +105,12 @@ public class SpaceShip : MonoBehaviour
         {
             gameManager.hitBomb();
             spaceBombManager.removeBomb(other);
+            for (int i = 0; i < bombExplosions.Length; i++)
+            {
+                ParticleSystem explosion = bombExplosions[i];
+                explosion.transform.position = other.transform.position;
+                explosion.Play();
+            }
             Destroy(other.gameObject);
             // double check
             gameManager.respawnShip();

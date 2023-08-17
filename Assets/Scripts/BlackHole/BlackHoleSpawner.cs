@@ -24,12 +24,6 @@ public class BlackHoleSpawner : MonoBehaviour
         asteroidManager = AsteroidManagerObj.GetComponent<AsteroidManager>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void startSpawner()
     {
         StartCoroutine(shootBlackHole());
@@ -39,8 +33,9 @@ public class BlackHoleSpawner : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(Random.Range(40f, 50f)); // wait time
-            asteroidManager.setMaxAsteroids(3);
+            yield return new WaitForSeconds(Random.Range(35f, 45f)); // wait time - (40, 50) default
+            asteroidManager.setMaxAsteroids(6); // mess with this value, no more than 6
+            yield return new WaitForSeconds(3);
             if (blackHoleManager.getNumBlackHoles() < blackHoleManager.getMaxBlackHoles())
             {
                 Vector3 spawnPos = transform.position;
@@ -49,7 +44,10 @@ public class BlackHoleSpawner : MonoBehaviour
                 Vector2 direction = getDirection();
                 float bombSpeed = 1f;
                 newBlackHole.GetComponent<Rigidbody2D>().velocity = new Vector2(direction.x, direction.y) * bombSpeed;
-                newBlackHole.GetComponent<Rigidbody2D>().AddTorque(Random.Range(10, 20));
+                float torqueMagnitude = Random.Range(10f, 20f);
+                float torqueDirection = Random.Range(0, 2) == 0 ? 1 : -1;
+                float finalTorque = torqueMagnitude * torqueDirection;
+                newBlackHole.GetComponent<Rigidbody2D>().AddTorque(finalTorque);
 
                 blackHoleManager.addBlackHole(newBlackHole);
             }
