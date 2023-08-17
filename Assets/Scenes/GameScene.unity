@@ -653,7 +653,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 95367912}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -23.305847, y: -0.7243644, z: -0.10012411}
+  m_LocalPosition: {x: -32.445847, y: -0.7243644, z: -0.10012411}
   m_LocalScale: {x: 0.7866671, y: 0.7866671, z: 0.7866671}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1064,7 +1064,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 140158721}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -24.535847, y: -4.6943645, z: -0.10012411}
+  m_LocalPosition: {x: -33.675846, y: -4.6943645, z: -0.10012411}
   m_LocalScale: {x: 0.87626, y: 0.87626, z: 0.87626}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1358,9 +1358,11 @@ GameObject:
   - component: {fileID: 200197643}
   - component: {fileID: 200197642}
   - component: {fileID: 200197644}
-  m_Layer: 0
+  - component: {fileID: 200197645}
+  - component: {fileID: 200197646}
+  m_Layer: 9
   m_Name: BlackHole
-  m_TagString: Untagged
+  m_TagString: BlackHole
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1425,7 +1427,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 200197641}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -24.82, y: -0.11, z: 0}
+  m_LocalPosition: {x: -33.96, y: -0.11, z: 0}
   m_LocalScale: {x: 0.85858, y: 0.85858, z: 0.85858}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1442,7 +1444,7 @@ PolygonCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -1505,6 +1507,42 @@ PolygonCollider2D:
       - {x: 0.84, y: -2.26}
       - {x: 0.85999995, y: -2.24}
       - {x: 1.1899999, y: -2.1299999}
+--- !u!114 &200197645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 200197641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97a9dd887cbc9d74cb6ed5a6f31fedf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AsteroidManagerObj: {fileID: 509323518}
+  spaceShip: {fileID: 802746475}
+  gameManagerObject: {fileID: 904906362}
+--- !u!50 &200197646
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 200197641}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &208879228
 GameObject:
   m_ObjectHideFlags: 0
@@ -7560,7 +7598,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -15, y: 0}
+  m_Offset: {x: -20, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -7571,7 +7609,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 20}
+  m_Size: {x: 1, y: 30}
   m_EdgeRadius: 0
 --- !u!1 &602500007
 GameObject:
@@ -7582,6 +7620,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 602500008}
+  - component: {fileID: 602500009}
   m_Layer: 0
   m_Name: BlackholeManager
   m_TagString: Untagged
@@ -7604,6 +7643,18 @@ Transform:
   m_Father: {fileID: 714804392}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &602500009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 602500007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 340f88bb73001c844a1ce9457d819ff7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &605836762
 GameObject:
   m_ObjectHideFlags: 0
@@ -13557,6 +13608,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 861677740}
+  - component: {fileID: 861677741}
   m_Layer: 0
   m_Name: BlackHoleSpawner2
   m_TagString: Untagged
@@ -13579,6 +13631,23 @@ Transform:
   m_Father: {fileID: 1247297754}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &861677741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 861677739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 542a20cad9ff3c64ba2f6bf72e5660b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blackHoleObj: {fileID: 200197641}
+  blackHoleManagerObj: {fileID: 602500007}
+  angleMin: 200
+  angleMax: 240
+  AsteroidManagerObj: {fileID: 509323518}
 --- !u!1 &871362790
 GameObject:
   m_ObjectHideFlags: 0
@@ -14079,6 +14148,10 @@ MonoBehaviour:
   timerText: {fileID: 460119143}
   newHighScoreObj: {fileID: 1387955571}
   explosion: {fileID: 1902113625}
+  blackHoleManagerObj: {fileID: 602500007}
+  blackHoleSpawners:
+  - {fileID: 953458000}
+  - {fileID: 861677739}
   endScreen: {fileID: 1807392277}
   endScreenScoreText: {fileID: 44820269}
   endScreenHighestScoreText: {fileID: 1910232441}
@@ -14227,6 +14300,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 953458001}
+  - component: {fileID: 953458002}
   m_Layer: 0
   m_Name: BlackHoleSpawner1
   m_TagString: Untagged
@@ -14249,6 +14323,23 @@ Transform:
   m_Father: {fileID: 1247297754}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &953458002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953458000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 542a20cad9ff3c64ba2f6bf72e5660b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blackHoleObj: {fileID: 200197641}
+  blackHoleManagerObj: {fileID: 602500007}
+  angleMin: 300
+  angleMax: 340
+  AsteroidManagerObj: {fileID: 509323518}
 --- !u!1 &956861165
 GameObject:
   m_ObjectHideFlags: 0
@@ -16420,7 +16511,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -10}
+  m_Offset: {x: 0, y: -15}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -16431,7 +16522,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 30, y: 1}
+  m_Size: {x: 40, y: 1}
   m_EdgeRadius: 0
 --- !u!1 &1428197831
 GameObject:
@@ -16478,7 +16569,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 10}
+  m_Offset: {x: 0, y: 15}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -16489,7 +16580,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 30, y: 1}
+  m_Size: {x: 40, y: 1}
   m_EdgeRadius: 0
 --- !u!1 &1432982277
 GameObject:
@@ -18062,7 +18153,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 15, y: 0}
+  m_Offset: {x: 20, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -18073,7 +18164,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 20}
+  m_Size: {x: 1, y: 30}
   m_EdgeRadius: 0
 --- !u!1 &1807274764
 GameObject:
@@ -23619,7 +23710,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1913501631}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -19.06, y: 2.17, z: 0}
+  m_LocalPosition: {x: -28.199999, y: 2.17, z: 0}
   m_LocalScale: {x: 0.7618655, y: 0.7618655, z: 0.7618655}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -29119,7 +29210,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4814428264348312796}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -18.21, y: 4.31, z: 0}
+  m_LocalPosition: {x: -27.349998, y: 4.31, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

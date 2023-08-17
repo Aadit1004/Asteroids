@@ -9,6 +9,7 @@ TagManager:
   - AsteroidSmall
   - AsteroidBoundary
   - SpaceBomb
+  - BlackHole
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - Asteroid
   - GameBoundary
   - SpaceBomb
-  - 
+  - BlackHole
   - 
   - 
   - 

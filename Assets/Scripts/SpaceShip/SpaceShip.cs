@@ -15,7 +15,6 @@ public class SpaceShip : MonoBehaviour
     private float spawnDistance = 0.8f;
 
     [SerializeField] private GameObject gameManagerObject;
-
     private GameScript gameManager;
 
     [SerializeField] private GameObject AsteroidManagerObj;

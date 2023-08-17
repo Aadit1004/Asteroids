@@ -101,5 +101,12 @@ public class Missile : MonoBehaviour
             }
             Destroy(this.gameObject);
         }
+
+        if (other.tag == "BlackHole")
+        {
+            //float distance = Vector2.Distance(other.transform.position, this.transform.position);
+            //if (distance < 2)
+            Destroy(this.gameObject);
+        }
     }
 }

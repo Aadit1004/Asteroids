@@ -35,6 +35,7 @@ public class GameScript : MonoBehaviour
     [SerializeField] private GameObject SpacebombManagerObj;
     private SpaceBombManager spaceBombManager;
     public GameObject[] spaceBombSpawners;
+    
 
     private int[] highscores = new int[5];
     [SerializeField] private GameObject highscoreUiParent;
@@ -51,6 +52,10 @@ public class GameScript : MonoBehaviour
 
     public ParticleSystem explosion;
 
+    [SerializeField] private GameObject blackHoleManagerObj;
+    private BlackHoleManager blackHoleManager;
+    public GameObject[] blackHoleSpawners;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -58,6 +63,7 @@ public class GameScript : MonoBehaviour
         startRotation = spaceShip.transform.rotation;
         asteroidManager = AsteroidManagerObj.GetComponent<AsteroidManager>();
         spaceBombManager = SpacebombManagerObj.GetComponent<SpaceBombManager>();
+        blackHoleManager = blackHoleManagerObj.GetComponent<BlackHoleManager>();
         for (int i = 0; i < highscores.Length; i++) highscores[i] = 0;
         loadData();
     }
@@ -91,12 +97,17 @@ public class GameScript : MonoBehaviour
         for (int i = 0; i < Spawners.Length; i++)
         {
             AsteroidSpawner spawner = Spawners[i].GetComponent<AsteroidSpawner>();
-            spawner.startSpawner();
+            //spawner.startSpawner();
         }
         for (int i = 0; i < spaceBombSpawners.Length; i++)
         {
             SpaceBombSpawner bombSpawner = spaceBombSpawners[i].GetComponent<SpaceBombSpawner>();
-            bombSpawner.startSpawner();
+            //bombSpawner.startSpawner();
+        }
+        for (int i = 0; i < blackHoleSpawners.Length; i++)
+        {
+            BlackHoleSpawner bhSpawner = blackHoleSpawners[i].GetComponent<BlackHoleSpawner>();
+            bhSpawner.startSpawner();
         }
         isTimed = false;
         if (gameMode == GameMode.TimeAttack1)
@@ -145,6 +156,7 @@ public class GameScript : MonoBehaviour
         spaceShip.gameObject.SetActive(false);
         asteroidManager.clearAsteroidsList();
         spaceBombManager.clearBombList();
+        blackHoleManager.clearBlackHolesList();
         for (int i = 0; i < Spawners.Length; i++)
         {
             AsteroidSpawner spawner = Spawners[i].GetComponent<AsteroidSpawner>();
