@@ -11,15 +11,26 @@ public class SpaceBomb : MonoBehaviour
 
     public ParticleSystem[] bombExplosions;
 
+    [SerializeField] private GameObject gameManagerObject;
+
+    private GameScript gameManager;
+
+    [SerializeField] private GameObject spaceship;
+
+    public ParticleSystem spaceshipExplosion;
+
+    [SerializeField] private GameObject AsteroidManagerObj;
+    private AsteroidManager asteroidManager;
 
     void Start()
     {
         spaceBombManager = bombManagerObj.GetComponent<SpaceBombManager>();
+        gameManager = gameManagerObject.GetComponent<GameScript>();
+        asteroidManager = AsteroidManagerObj.GetComponent<AsteroidManager>();
     }
 
     public void startExplosion()
     {
-        Debug.Log("Starting Explosion");
         StartCoroutine(explosionDelay());
     }
 
@@ -32,9 +43,15 @@ public class SpaceBomb : MonoBehaviour
             explosion.transform.position = transform.position;
             explosion.Play();
         }
+        if ((Vector2.Distance(this.transform.position, spaceship.transform.position) <= 2) && gameManager.canCollideWithThreats())
+        {
+            gameManager.hitBomb();
+            spaceshipExplosion.transform.position = spaceship.transform.position;
+            spaceshipExplosion.Play();
+            gameManager.respawnShip();
+        }
         spaceBombManager.removeBomb(this.gameObject);
         Destroy(this.gameObject);
-        Debug.Log("Explosion Completed");
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -56,5 +73,10 @@ public class SpaceBomb : MonoBehaviour
     public void detuctLife()
     {
         lives--;
+    }
+
+    private void OnDestroy()
+    {
+        asteroidManager.resetMaxAsteroids();
     }
 }

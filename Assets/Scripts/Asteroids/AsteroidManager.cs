@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class AsteroidManager : MonoBehaviour
 {
-    [Range(10, 20)] public int maxAsteroids;
+    private int maxAsteroids = 12;
     private int tempMax;
-    private int currentAsteroids = 0;
+    private int currentAsteroids;
     private List<GameObject> lofAsteroid = new List<GameObject>();
 
     // Start is called before the first frame update
@@ -15,13 +15,6 @@ public class AsteroidManager : MonoBehaviour
         currentAsteroids = 0;
         tempMax = maxAsteroids;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public int getMaxAsteroids() { return  maxAsteroids; }
     public void addAsteroid(GameObject asteroid) 
     { 

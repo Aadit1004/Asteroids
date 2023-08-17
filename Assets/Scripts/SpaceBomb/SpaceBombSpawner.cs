@@ -14,9 +14,13 @@ public class SpaceBombSpawner : MonoBehaviour
 
     public bool leftSpawner = false;
 
+    [SerializeField] private GameObject AsteroidManagerObj;
+    private AsteroidManager asteroidManager;
+
     void Start()
     {
         spaceBombManager = spaceBombManagerObj.GetComponent<SpaceBombManager>();
+        asteroidManager = AsteroidManagerObj.GetComponent<AsteroidManager>();
     }
 
     public void startSpawner()
@@ -28,7 +32,8 @@ public class SpaceBombSpawner : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(Random.Range(2, 10)); // wait time
+            yield return new WaitForSeconds(Random.Range(20f, 30f)); // wait time
+            asteroidManager.setMaxAsteroids(6);
             if (spaceBombManager.getNumBombs() < spaceBombManager.getMaxBombs())
             {
                 Vector3 spawnPos = transform.position;

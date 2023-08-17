@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpaceShip : MonoBehaviour
 {
     private Rigidbody2D rb;
-    private float rotationAmount = 40f;
+    private float rotationAmount = 30f;
     private float thrustAmount = 1.3f;
     private const float maxThrust = 5;
     private float maxAngularVelocity = 200f;

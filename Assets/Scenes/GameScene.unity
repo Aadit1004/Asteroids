@@ -23553,6 +23553,9 @@ MonoBehaviour:
   - {fileID: 727568454}
   - {fileID: 232926643}
   - {fileID: 2028470030}
+  gameManagerObject: {fileID: 904906362}
+  spaceship: {fileID: 802746475}
+  spaceshipExplosion: {fileID: 1902113625}
 --- !u!1 &1968276847
 GameObject:
   m_ObjectHideFlags: 0

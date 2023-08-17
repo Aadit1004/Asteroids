@@ -91,7 +91,7 @@ public class GameScript : MonoBehaviour
         for (int i = 0; i < Spawners.Length; i++)
         {
             AsteroidSpawner spawner = Spawners[i].GetComponent<AsteroidSpawner>();
-            //spawner.startSpawner();
+            spawner.startSpawner();
         }
         for (int i = 0; i < spaceBombSpawners.Length; i++)
         {
