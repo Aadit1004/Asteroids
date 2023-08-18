@@ -50,10 +50,14 @@ public class SpaceBomb : MonoBehaviour
         }
         if ((Vector2.Distance(this.transform.position, spaceship.transform.position) <= 2.5f) && gameManager.canCollideWithThreats())
         {
-            gameManager.hitBomb();
-            spaceshipExplosion.transform.position = spaceship.transform.position;
-            spaceshipExplosion.Play();
-            gameManager.respawnShip();
+            if (!(spaceship.GetComponent<SpaceShip>().shieldIsActive()))
+            {
+                spaceship.GetComponent<SpaceShip>().resetPowerUp();
+                gameManager.hitBomb();
+                spaceshipExplosion.transform.position = spaceship.transform.position;
+                spaceshipExplosion.Play();
+                gameManager.respawnShip();
+            }
         }
         spaceBombManager.removeBomb(this.gameObject);
         Destroy(this.gameObject);

@@ -1,6 +1,17 @@
+using System;
 using System.Collections;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEditor.Tilemaps;
 using UnityEngine;
+
+public enum PowerUp
+{
+    None,
+    BurstFire,
+    Shield,
+    TimeDilation
+}
 
 public class SpaceShip : MonoBehaviour
 {
@@ -23,17 +34,29 @@ public class SpaceShip : MonoBehaviour
     [SerializeField] private GameObject bombManagerObj;
     private SpaceBombManager spaceBombManager;
 
+    // PowerUps
+
+    PowerUp currentPowerUp = PowerUp.None;
+    private bool isPowerUpActive = false;
+    private float powerUpDuration = 0.0f;
+    Coroutine powerUpCoroutineTimer;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();   
         gameManager = gameManagerObject.GetComponent<GameScript>();
         asteroidManager = AsteroidManagerObj.GetComponent<AsteroidManager>();
         spaceBombManager = bombManagerObj.GetComponent<SpaceBombManager>();
+
+        // delete later
+        currentPowerUp = PowerUp.None;
     }
 
     void Update()
     {
-        if (gameManager.isGameActive())
+        //if (gameManager.isGameActive())
+        displayText();
+        if (true)
         {
             if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
             {
@@ -70,11 +93,69 @@ public class SpaceShip : MonoBehaviour
             } // add thrust
             if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
             {
-                Vector2 spawnPosition = transform.position + transform.up * spawnDistance;
-                GameObject newMissile = Instantiate(missile, spawnPosition, Quaternion.identity);
-                newMissile.GetComponent<Rigidbody2D>().velocity = GetFacingDirection() * missileSpeed;
+                if (currentPowerUp == PowerUp.BurstFire && isPowerUpActive)
+                {
+                    // start coroutine
+                    // reset powerup to none and isPowerUpActive = false
+                    StartCoroutine(burstFireDelay());
+                }
+                else
+                {
+                    Vector2 spawnPosition = transform.position + transform.up * spawnDistance;
+                    GameObject newMissile = Instantiate(missile, spawnPosition, Quaternion.identity);
+                    newMissile.GetComponent<Rigidbody2D>().velocity = GetFacingDirection() * missileSpeed;
+                }
+                
             } // fire missile
+            if (Input.GetKey(KeyCode.E) && currentPowerUp != PowerUp.None) 
+            {
+                isPowerUpActive = true;
+                switch (currentPowerUp)
+                {
+                    case PowerUp.Shield:
+                        powerUpDuration = 10f;
+                        break;
+                    case PowerUp.BurstFire:
+                        powerUpDuration = 8f;
+                        break;
+                    case PowerUp.TimeDilation:
+                        powerUpDuration = 5f;
+                        break;
+                }
+                powerUpCoroutineTimer = StartCoroutine(DurationOfPowerUp(powerUpDuration));
+                // start coroutine for duration of powerup
+            }
         }
+    }
+
+    public TMP_Text boolVal;
+    public TMP_Text currentVal;
+
+    private void displayText()
+    {
+        boolVal.text = "isPowerUpActive: " + isPowerUpActive;
+        currentVal.text = "Current PowerUp: " + currentPowerUp;
+    }
+
+    IEnumerator burstFireDelay()
+    {
+        int count = 3;
+        while (count > 0)
+        {
+            Vector2 spawnPosition = transform.position + transform.up * spawnDistance;
+            GameObject newMissile = Instantiate(missile, spawnPosition, Quaternion.identity);
+            newMissile.GetComponent<Rigidbody2D>().velocity = GetFacingDirection() * missileSpeed;
+            count--;
+            yield return new WaitForSecondsRealtime(0.07f);
+        }
+    }
+
+    IEnumerator DurationOfPowerUp(float durationTime)
+    {
+        yield return new WaitForSecondsRealtime(durationTime);
+        currentPowerUp = PowerUp.None;
+        isPowerUpActive = false;
+        powerUpDuration = 0.0f;
     }
 
     private Vector2 GetFacingDirection()
@@ -94,26 +175,59 @@ public class SpaceShip : MonoBehaviour
         }
         if ((other.tag == "AsteroidBig" || other.tag == "AsteroidSmall") && gameManager.canCollideWithThreats())
         {
-            gameManager.hitAsteroid();
-            asteroidManager.removeAsteroid(other);
-            //Debug.Log("life lost");
-            Destroy(other.gameObject);
-            gameManager.respawnShip();
-            // any logic for hitting asteroids
+            if (!(currentPowerUp == PowerUp.Shield && isPowerUpActive))
+            {
+                resetPowerUp();
+                gameManager.hitAsteroid();
+                asteroidManager.removeAsteroid(other);
+                Destroy(other.gameObject);
+                gameManager.respawnShip();
+            }
         }
         if (other.tag == "SpaceBomb")
         {
-            gameManager.hitBomb();
-            spaceBombManager.removeBomb(other);
-            for (int i = 0; i < bombExplosions.Length; i++)
+            if (!(currentPowerUp == PowerUp.Shield && isPowerUpActive))
             {
-                ParticleSystem explosion = bombExplosions[i];
-                explosion.transform.position = other.transform.position;
-                explosion.Play();
+                resetPowerUp();
+                gameManager.hitBomb();
+                spaceBombManager.removeBomb(other);
+                for (int i = 0; i < bombExplosions.Length; i++)
+                {
+                    ParticleSystem explosion = bombExplosions[i];
+                    explosion.transform.position = other.transform.position;
+                    explosion.Play();
+                }
+                Destroy(other.gameObject);
+                gameManager.respawnShip();
             }
-            Destroy(other.gameObject);
-            // double check
-            gameManager.respawnShip();
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        GameObject other = collision.gameObject;
+        if (other.tag == "TimeDilation")
+        {
+            if (currentPowerUp == PowerUp.None) currentPowerUp = PowerUp.TimeDilation;
+        }
+        if (other.tag == "Shield")
+        {
+            if (currentPowerUp == PowerUp.None) currentPowerUp = PowerUp.Shield;
+        }
+        if (other.tag == "BurstFire")
+        {
+            if (currentPowerUp == PowerUp.None) currentPowerUp = PowerUp.BurstFire;
+        }
+    }
+
+    public void resetPowerUp()
+    {
+        StopCoroutine(powerUpCoroutineTimer);
+        currentPowerUp = PowerUp.None;
+        isPowerUpActive = false;
+        powerUpDuration = 0.0f;
+        // stop powerup coroutines and timers
+    }
+
+    public bool shieldIsActive() { return currentPowerUp == PowerUp.Shield && isPowerUpActive; }
 }

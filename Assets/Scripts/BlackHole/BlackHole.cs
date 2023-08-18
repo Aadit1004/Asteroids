@@ -73,6 +73,7 @@ public class BlackHole : MonoBehaviour
                             gameManager.suckedInBlackHolde();
                             spaceshipExplosion.transform.position = spaceShip.transform.position;
                             spaceshipExplosion.Play();
+                            spaceShip.GetComponent<SpaceShip>().resetPowerUp();
                             gameManager.respawnShip();
                         }
                     }

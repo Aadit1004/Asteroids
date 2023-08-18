@@ -11,6 +11,9 @@ TagManager:
   - SpaceBomb
   - BlackHole
   - Missile
+  - TimeDilation
+  - Shield
+  - BurstFire
   layers:
   - Default
   - TransparentFX

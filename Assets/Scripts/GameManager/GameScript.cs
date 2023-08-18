@@ -183,6 +183,7 @@ public class GameScript : MonoBehaviour
             bhSpawner.resetSpawner();
         }
         resetShipPosition();
+        spaceShip.gameObject.GetComponent<SpaceShip>().resetPowerUp();
         lives = 3;
         score = 0;
         isTimed = false;
