@@ -15,6 +15,7 @@ public class GameUI : MonoBehaviour
     [SerializeField] private GameObject endScreenUi;
     [SerializeField] private GameObject highScoreUi;
     [SerializeField] private GameObject gameModesUi;
+    [SerializeField] private GameObject creditsUi;
 
 
     // Main Menu Button Texts
@@ -56,7 +57,7 @@ public class GameUI : MonoBehaviour
         time3ButtonText.text = "Time Attack - 3 minutes";
         time5ButtonText.text = "Time Attack - 5 minutes";
         survivalButtonText.text = "Survival";
-    }
+    } // calls game modes,,,doesnt start actual game
 
     public void OnApplicationQuit()
     {
@@ -67,7 +68,18 @@ public class GameUI : MonoBehaviour
         gameScript.saveData();
         Application.Quit();
     }
-
+    public void OnHighScore()
+    {
+        mainMenuUi.SetActive(false);
+        highScoreUi.gameObject.SetActive(true);
+        highScoreButtonText.text = "High Scores";
+    }
+    public void OnCredits()
+    {
+        mainMenuUi.gameObject. SetActive(false);
+        creditsUi.gameObject.SetActive(true);
+        creditsButtonText.text = "Credits";
+    }
 
     // End Screen
 
@@ -89,13 +101,6 @@ public class GameUI : MonoBehaviour
     }
 
     // High scores
-
-    public void OnHighScore()
-    {
-        mainMenuUi.SetActive(false);
-        highScoreUi.gameObject.SetActive(true);
-        highScoreButtonText.text = "High Scores";
-    }
 
     public void OnHighScoreMainMenu()
     {
@@ -143,6 +148,14 @@ public class GameUI : MonoBehaviour
     public void OnModesMainMenu()
     {
         gameModesUi.gameObject.SetActive(false);
+        mainMenuUi.gameObject.SetActive(true);
+    }
+
+    // Credits 
+
+    public void OnCreditsMainMenuButton()
+    {
+        creditsUi.gameObject.SetActive(false);
         mainMenuUi.gameObject.SetActive(true);
     }
 }
