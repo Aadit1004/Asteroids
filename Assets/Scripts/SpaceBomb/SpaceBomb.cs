@@ -48,7 +48,7 @@ public class SpaceBomb : MonoBehaviour
             explosion.transform.position = transform.position;
             explosion.Play();
         }
-        if ((Vector2.Distance(this.transform.position, spaceship.transform.position) <= 2.5f) && gameManager.canCollideWithThreats())
+        if ((Vector2.Distance(this.transform.position, spaceship.transform.position) <= 3f) && gameManager.canCollideWithThreats())
         {
             if (!(spaceship.GetComponent<SpaceShip>().shieldIsActive()))
             {

@@ -34,7 +34,7 @@ public class SpaceBombSpawner : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(Random.Range(20f, 25f)); // wait time - (20f, 25f) default
-            asteroidManager.setMaxAsteroids(6);
+            asteroidManager.setMaxAsteroids(8);
             yield return new WaitForSeconds(3);
             if (spaceBombManager.getNumBombs() < spaceBombManager.getMaxBombs())
             {

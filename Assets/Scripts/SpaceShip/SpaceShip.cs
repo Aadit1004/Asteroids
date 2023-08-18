@@ -54,9 +54,8 @@ public class SpaceShip : MonoBehaviour
 
     void Update()
     {
-        //if (gameManager.isGameActive())
         displayText();
-        if (true)
+        if (gameManager.isGameActive())
         {
             if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
             {
@@ -226,8 +225,21 @@ public class SpaceShip : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        GameObject other = collision.gameObject;
+
         //checkPowerUp(collision.gameObject); // uncomment if want spaceship to pickup powerups if clashing into each other
+
+        if (other.tag == "TimeDilation" || other.tag == "Shield" || other.tag == "BurstFire")
+        {
+            powerUpsManager.removePowerUp(other);
+            redExplosion.transform.position = other.transform.position;
+            redExplosion.Play();
+            Destroy(other.gameObject);
+        }
     }
+
+    public ParticleSystem blueExplosion;
+    public ParticleSystem redExplosion;
 
     public void checkPowerUp(GameObject other)
     {
@@ -237,6 +249,15 @@ public class SpaceShip : MonoBehaviour
             {
                 currentPowerUp = PowerUp.TimeDilation;
                 powerUpsManager.removePowerUp(other);
+                blueExplosion.transform.position = other.transform.position;
+                blueExplosion.Play();
+                Destroy(other.gameObject);
+            } 
+            else
+            {
+                powerUpsManager.removePowerUp(other);
+                redExplosion.transform.position = other.transform.position;
+                redExplosion.Play();
                 Destroy(other.gameObject);
             }
 
@@ -247,6 +268,15 @@ public class SpaceShip : MonoBehaviour
             {
                 currentPowerUp = PowerUp.Shield;
                 powerUpsManager.removePowerUp(other);
+                blueExplosion.transform.position = other.transform.position;
+                blueExplosion.Play();
+                Destroy(other.gameObject);
+            }
+            else
+            {
+                powerUpsManager.removePowerUp(other);
+                redExplosion.transform.position = other.transform.position;
+                redExplosion.Play();
                 Destroy(other.gameObject);
             }
         }
@@ -256,6 +286,15 @@ public class SpaceShip : MonoBehaviour
             {
                 currentPowerUp = PowerUp.BurstFire;
                 powerUpsManager.removePowerUp(other);
+                blueExplosion.transform.position = other.transform.position;
+                blueExplosion.Play();
+                Destroy(other.gameObject);
+            }
+            else
+            {
+                powerUpsManager.removePowerUp(other);
+                redExplosion.transform.position = other.transform.position;
+                redExplosion.Play();
                 Destroy(other.gameObject);
             }
         }

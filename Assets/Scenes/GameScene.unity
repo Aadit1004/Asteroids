@@ -7800,7 +7800,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: N.A.
+  m_text: Nate Sevestre
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2cea201834972af4aaeeb048155674cb, type: 2}
   m_sharedMaterial: {fileID: 4028407511596972081, guid: 2cea201834972af4aaeeb048155674cb, type: 2}
@@ -9032,6 +9032,8 @@ MonoBehaviour:
   currentVal: {fileID: 0}
   bombExplosions: []
   powerUpManagerObj: {fileID: 0}
+  blueExplosion: {fileID: 0}
+  redExplosion: {fileID: 0}
 --- !u!212 &655653614
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -14974,6 +14976,8 @@ MonoBehaviour:
   - {fileID: 232926643}
   - {fileID: 2028470030}
   powerUpManagerObj: {fileID: 1133809061}
+  blueExplosion: {fileID: 921621639}
+  redExplosion: {fileID: 1946156957}
 --- !u!50 &802746479
 Rigidbody2D:
   serializedVersion: 4
