@@ -50,4 +50,25 @@ public class AsteroidManager : MonoBehaviour
     public void setMaxAsteroids(int newMax) { if (newMax < maxAsteroids) maxAsteroids = newMax; }
     public void resetMaxAsteroids() { maxAsteroids = tempMax; }
 
+    public void setAsteroidsSpeed()
+    {
+        foreach (var ast in lofAsteroid)
+        {
+            Rigidbody2D rb = ast.gameObject.GetComponent<Rigidbody2D>();
+            Vector2 direction = rb.velocity.normalized;
+            float newSpeed = rb.velocity.magnitude * 0.4f;
+            rb.AddForce(new Vector2(-direction.x, -direction.y) * newSpeed);
+        }
+    }
+
+    public void resetAsteroidsSpeed()
+    {
+        foreach (var ast in lofAsteroid)
+        {
+            Rigidbody2D rb = ast.gameObject.GetComponent<Rigidbody2D>();
+            Vector2 direction = rb.velocity.normalized;
+            float newSpeed = rb.velocity.magnitude * 0.4f;
+            rb.AddForce(new Vector2(direction.x, direction.y) * newSpeed);
+        }
+    }
 }

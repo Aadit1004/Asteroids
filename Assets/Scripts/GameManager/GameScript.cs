@@ -94,6 +94,7 @@ public class GameScript : MonoBehaviour
         lives = (gameMode == GameMode.Survival) ? 1 : 3;
         hideCursor();
         isGameOn = true;
+        spaceShip.gameObject.GetComponent<SpaceShip>().resetPowerUp();
         spaceShip.gameObject.SetActive(true);
         resetShipPosition();
 

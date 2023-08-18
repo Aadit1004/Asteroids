@@ -40,6 +40,7 @@ public class SpaceShip : MonoBehaviour
     private bool isPowerUpActive = false;
     private float powerUpDuration = 0.0f;
     Coroutine powerUpCoroutineTimer;
+    bool isCoroutineRunning = false;
 
     void Start()
     {
@@ -47,8 +48,6 @@ public class SpaceShip : MonoBehaviour
         gameManager = gameManagerObject.GetComponent<GameScript>();
         asteroidManager = AsteroidManagerObj.GetComponent<AsteroidManager>();
         spaceBombManager = bombManagerObj.GetComponent<SpaceBombManager>();
-
-        // delete later
         currentPowerUp = PowerUp.None;
     }
 
@@ -119,14 +118,16 @@ public class SpaceShip : MonoBehaviour
                         powerUpDuration = 8f;
                         break;
                     case PowerUp.TimeDilation:
-                        powerUpDuration = 5f;
+                        powerUpDuration = 6f;
+                        activateTimeDilation();
                         break;
                 }
                 powerUpCoroutineTimer = StartCoroutine(DurationOfPowerUp(powerUpDuration));
-                // start coroutine for duration of powerup
             }
         }
     }
+
+    #region Delete Later
 
     public TMP_Text boolVal;
     public TMP_Text currentVal;
@@ -135,6 +136,14 @@ public class SpaceShip : MonoBehaviour
     {
         boolVal.text = "isPowerUpActive: " + isPowerUpActive;
         currentVal.text = "Current PowerUp: " + currentPowerUp;
+    }
+
+    #endregion
+
+    private void activateTimeDilation()
+    {
+        asteroidManager.setAsteroidsSpeed();
+        spaceBombManager.setsSpaceBombSpeed();
     }
 
     IEnumerator burstFireDelay()
@@ -152,10 +161,17 @@ public class SpaceShip : MonoBehaviour
 
     IEnumerator DurationOfPowerUp(float durationTime)
     {
+        isCoroutineRunning = true;
         yield return new WaitForSecondsRealtime(durationTime);
+        if (currentPowerUp == PowerUp.TimeDilation)
+        {
+            asteroidManager.resetAsteroidsSpeed();
+            spaceBombManager.resetSpaceBombSpeed();
+        }
         currentPowerUp = PowerUp.None;
         isPowerUpActive = false;
         powerUpDuration = 0.0f;
+        isCoroutineRunning = false;
     }
 
     private Vector2 GetFacingDirection()
@@ -208,21 +224,39 @@ public class SpaceShip : MonoBehaviour
         GameObject other = collision.gameObject;
         if (other.tag == "TimeDilation")
         {
-            if (currentPowerUp == PowerUp.None) currentPowerUp = PowerUp.TimeDilation;
+            if (currentPowerUp == PowerUp.None)
+            {
+                currentPowerUp = PowerUp.TimeDilation;
+                Destroy(other.gameObject);
+            }
+                
         }
         if (other.tag == "Shield")
         {
-            if (currentPowerUp == PowerUp.None) currentPowerUp = PowerUp.Shield;
+            if (currentPowerUp == PowerUp.None)
+            {
+                currentPowerUp = PowerUp.Shield;
+                Destroy(other.gameObject);
+            }
         }
         if (other.tag == "BurstFire")
         {
-            if (currentPowerUp == PowerUp.None) currentPowerUp = PowerUp.BurstFire;
+            if (currentPowerUp == PowerUp.None)
+            {
+                currentPowerUp = PowerUp.BurstFire;
+                Destroy(other.gameObject);
+            }
         }
     }
 
     public void resetPowerUp()
     {
-        StopCoroutine(powerUpCoroutineTimer);
+        if (isCoroutineRunning) StopCoroutine(powerUpCoroutineTimer);
+        if (currentPowerUp == PowerUp.TimeDilation)
+        {
+            asteroidManager.resetAsteroidsSpeed();
+            spaceBombManager.resetSpaceBombSpeed();
+        }
         currentPowerUp = PowerUp.None;
         isPowerUpActive = false;
         powerUpDuration = 0.0f;
@@ -230,4 +264,5 @@ public class SpaceShip : MonoBehaviour
     }
 
     public bool shieldIsActive() { return currentPowerUp == PowerUp.Shield && isPowerUpActive; }
+    public bool timeDilationIsActive() { return currentPowerUp == PowerUp.TimeDilation && isPowerUpActive; }
 }

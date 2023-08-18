@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class AsteroidSpawner : MonoBehaviour
@@ -8,6 +9,7 @@ public class AsteroidSpawner : MonoBehaviour
     [SerializeField] private GameObject smallAsteroid;
     [SerializeField] private GameObject AsteroidManagerObj;
     private AsteroidManager asteroidManager;
+    [SerializeField] private GameObject spaceShip;
 
     // degrees (as unit circle {0/360 to right, 180 to left})
     [SerializeField] private float angleMin;  
@@ -44,7 +46,13 @@ public class AsteroidSpawner : MonoBehaviour
                 float torqueDirection = Random.Range(0, 2) == 0 ? 1 : -1;
                 float finalTorque = torqueMagnitude * torqueDirection;
                 newAst.GetComponent<Rigidbody2D>().AddTorque(finalTorque);
-
+                if (spaceShip.gameObject.GetComponent<SpaceShip>().timeDilationIsActive())
+                {
+                    Rigidbody2D rb = newAst.GetComponent<Rigidbody2D>();
+                    Vector2 tempDirection = rb.velocity.normalized;
+                    float newSpeed = rb.velocity.magnitude * 0.4f;
+                    rb.AddForce(new Vector2(-tempDirection.x, -tempDirection.y) * newSpeed);
+                }
             }
         }
     }

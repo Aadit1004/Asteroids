@@ -35,4 +35,26 @@ public class SpaceBombManager : MonoBehaviour
         lofBomb.Clear();
         currentBombs = 0;
     }
+
+    public void setsSpaceBombSpeed()
+    {
+        foreach (var bomb in lofBomb)
+        {
+            Rigidbody2D rb = bomb.gameObject.GetComponent<Rigidbody2D>();
+            Vector2 direction = rb.velocity.normalized;
+            float newSpeed = rb.velocity.magnitude * 0.4f;
+            rb.AddForce(new Vector2(-direction.x, -direction.y) * newSpeed);
+        }
+    }
+
+    public void resetSpaceBombSpeed()
+    {
+        foreach (var bomb in lofBomb)
+        {
+            Rigidbody2D rb = bomb.gameObject.GetComponent<Rigidbody2D>();
+            Vector2 direction = rb.velocity.normalized;
+            float newSpeed = rb.velocity.magnitude * 0.4f;
+            rb.AddForce(new Vector2(direction.x, direction.y) * newSpeed);
+        }
+    }
 }
