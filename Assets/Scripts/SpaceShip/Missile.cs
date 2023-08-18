@@ -21,6 +21,8 @@ public class Missile : MonoBehaviour
         spaceBombManager = bombManagerObj.GetComponent<SpaceBombManager>();
     }
 
+    [SerializeField] private GameObject spaceShip;
+
     //private void OnCollisionEnter2D(Collision2D collision)
     //{
     //    GameObject other = collision.gameObject;
@@ -101,11 +103,14 @@ public class Missile : MonoBehaviour
             }
             Destroy(this.gameObject);
         }
-
         if (other.tag == "BlackHole")
         {
             float distance = Vector2.Distance(other.transform.position, this.transform.position);
             if (distance < 1) Destroy(this.gameObject);
+        }
+        if (other.tag == "Shield" || other.tag == "TimeDilation" || other.tag == "BurstFire")
+        {
+            spaceShip.gameObject.GetComponent<SpaceShip>().checkPowerUp(other.gameObject);
         }
     }
 }

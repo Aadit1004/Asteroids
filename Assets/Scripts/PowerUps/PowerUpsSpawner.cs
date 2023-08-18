@@ -37,7 +37,7 @@ public class PowerUpsSpawner : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(Random.Range(12f, 20f)); // wait time - (10f, 20f) default
+            yield return new WaitForSeconds(Random.Range(2f, 5f)); // wait time - (12f, 20f) default
             if (powerUpManager.getNumPowerUps() < powerUpManager.getMaxPowerUps())
             {
                 Vector3 spawnPos = transform.position;

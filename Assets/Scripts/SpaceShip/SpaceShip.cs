@@ -226,7 +226,11 @@ public class SpaceShip : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        GameObject other = collision.gameObject;
+        //checkPowerUp(collision.gameObject); // uncomment if want spaceship to pickup powerups if clashing into each other
+    }
+
+    public void checkPowerUp(GameObject other)
+    {
         if (other.tag == "TimeDilation")
         {
             if (currentPowerUp == PowerUp.None)
@@ -235,7 +239,7 @@ public class SpaceShip : MonoBehaviour
                 powerUpsManager.removePowerUp(other);
                 Destroy(other.gameObject);
             }
-                
+
         }
         if (other.tag == "Shield")
         {
