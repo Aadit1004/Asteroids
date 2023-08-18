@@ -48,6 +48,7 @@ public class SpaceShip : MonoBehaviour
         gameManager = gameManagerObject.GetComponent<GameScript>();
         asteroidManager = AsteroidManagerObj.GetComponent<AsteroidManager>();
         spaceBombManager = bombManagerObj.GetComponent<SpaceBombManager>();
+        powerUpsManager = powerUpManagerObj.GetComponent<PowerUpsManager>();
         currentPowerUp = PowerUp.None;
     }
 
@@ -219,6 +220,10 @@ public class SpaceShip : MonoBehaviour
         }
     }
 
+
+    [SerializeField] private GameObject powerUpManagerObj;
+    private PowerUpsManager powerUpsManager;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         GameObject other = collision.gameObject;
@@ -227,6 +232,7 @@ public class SpaceShip : MonoBehaviour
             if (currentPowerUp == PowerUp.None)
             {
                 currentPowerUp = PowerUp.TimeDilation;
+                powerUpsManager.removePowerUp(other);
                 Destroy(other.gameObject);
             }
                 
@@ -236,6 +242,7 @@ public class SpaceShip : MonoBehaviour
             if (currentPowerUp == PowerUp.None)
             {
                 currentPowerUp = PowerUp.Shield;
+                powerUpsManager.removePowerUp(other);
                 Destroy(other.gameObject);
             }
         }
@@ -244,6 +251,7 @@ public class SpaceShip : MonoBehaviour
             if (currentPowerUp == PowerUp.None)
             {
                 currentPowerUp = PowerUp.BurstFire;
+                powerUpsManager.removePowerUp(other);
                 Destroy(other.gameObject);
             }
         }

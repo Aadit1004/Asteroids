@@ -582,6 +582,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 71904894}
+  - component: {fileID: 71904895}
   m_Layer: 0
   m_Name: powerSpawner1
   m_TagString: Untagged
@@ -604,6 +605,25 @@ Transform:
   m_Father: {fileID: 1469676280}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &71904895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 71904893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c38eca9ed9ab3e4484657b332b423ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeDilationObj: {fileID: 513301564}
+  burstFireObj: {fileID: 577053627}
+  shieldObj: {fileID: 1020717664}
+  powerUpManagerObj: {fileID: 1133809061}
+  angleMin: 150
+  angleMax: 210
+  leftSpawner: 1
 --- !u!1 &85502678
 GameObject:
   m_ObjectHideFlags: 0
@@ -7982,6 +8002,7 @@ GameObject:
   - component: {fileID: 513301567}
   - component: {fileID: 513301566}
   - component: {fileID: 513301565}
+  - component: {fileID: 513301569}
   m_Layer: 10
   m_Name: TimePowerUp
   m_TagString: TimeDilation
@@ -8093,6 +8114,19 @@ Transform:
   m_Father: {fileID: 1917900222}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &513301569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 513301564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0aa4c4e81f5c5c45b7c68cb7087bb2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerUpManagerObj: {fileID: 1133809061}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -8240,6 +8274,7 @@ GameObject:
   - component: {fileID: 577053628}
   - component: {fileID: 577053631}
   - component: {fileID: 577053630}
+  - component: {fileID: 577053632}
   m_Layer: 10
   m_Name: BurstFirePowerUp
   m_TagString: BurstFire
@@ -8351,6 +8386,19 @@ CircleCollider2D:
   m_Offset: {x: -0.046397842, y: 0.04607717}
   serializedVersion: 2
   m_Radius: 0.9965598
+--- !u!114 &577053632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 577053627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0aa4c4e81f5c5c45b7c68cb7087bb2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerUpManagerObj: {fileID: 1133809061}
 --- !u!1 &594376268
 GameObject:
   m_ObjectHideFlags: 0
@@ -8983,6 +9031,7 @@ MonoBehaviour:
   boolVal: {fileID: 0}
   currentVal: {fileID: 0}
   bombExplosions: []
+  powerUpManagerObj: {fileID: 0}
 --- !u!212 &655653614
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -14924,6 +14973,7 @@ MonoBehaviour:
   - {fileID: 727568454}
   - {fileID: 232926643}
   - {fileID: 2028470030}
+  powerUpManagerObj: {fileID: 1133809061}
 --- !u!50 &802746479
 Rigidbody2D:
   serializedVersion: 4
@@ -15781,6 +15831,10 @@ MonoBehaviour:
   blackHoleSpawners:
   - {fileID: 953458000}
   - {fileID: 861677739}
+  powerUpManagerObj: {fileID: 1133809061}
+  powerUpSpawners:
+  - {fileID: 71904893}
+  - {fileID: 1924914722}
   endScreen: {fileID: 1807392277}
   endScreenScoreText: {fileID: 44820269}
   endScreenHighestScoreText: {fileID: 1910232441}
@@ -16388,6 +16442,7 @@ GameObject:
   - component: {fileID: 1020717667}
   - component: {fileID: 1020717666}
   - component: {fileID: 1020717665}
+  - component: {fileID: 1020717669}
   m_Layer: 10
   m_Name: ShieldPowerUp
   m_TagString: Shield
@@ -16499,6 +16554,19 @@ Transform:
   m_Father: {fileID: 1917900222}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1020717669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1020717664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0aa4c4e81f5c5c45b7c68cb7087bb2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerUpManagerObj: {fileID: 1133809061}
 --- !u!1 &1065165150
 GameObject:
   m_ObjectHideFlags: 0
@@ -17229,6 +17297,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1133809062}
+  - component: {fileID: 1133809063}
   m_Layer: 0
   m_Name: PowerUpManager
   m_TagString: Untagged
@@ -17251,6 +17320,18 @@ Transform:
   m_Father: {fileID: 1917900222}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1133809063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1133809061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cff7022d137f32547952e2f0226657c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1167278018
 GameObject:
   m_ObjectHideFlags: 0
@@ -26387,6 +26468,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1924914723}
+  - component: {fileID: 1924914724}
   m_Layer: 0
   m_Name: powerSpawner2
   m_TagString: Untagged
@@ -26409,6 +26491,25 @@ Transform:
   m_Father: {fileID: 1469676280}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1924914724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1924914722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c38eca9ed9ab3e4484657b332b423ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeDilationObj: {fileID: 513301564}
+  burstFireObj: {fileID: 577053627}
+  shieldObj: {fileID: 1020717664}
+  powerUpManagerObj: {fileID: 1133809061}
+  angleMin: 150
+  angleMax: 210
+  leftSpawner: 0
 --- !u!1 &1968276847
 GameObject:
   m_ObjectHideFlags: 0

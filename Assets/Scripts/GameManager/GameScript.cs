@@ -56,6 +56,10 @@ public class GameScript : MonoBehaviour
     private BlackHoleManager blackHoleManager;
     public GameObject[] blackHoleSpawners;
 
+    [SerializeField] private GameObject powerUpManagerObj;
+    private PowerUpsManager powerUpsManager;
+    public GameObject[] powerUpSpawners;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -64,6 +68,7 @@ public class GameScript : MonoBehaviour
         asteroidManager = AsteroidManagerObj.GetComponent<AsteroidManager>();
         spaceBombManager = SpacebombManagerObj.GetComponent<SpaceBombManager>();
         blackHoleManager = blackHoleManagerObj.GetComponent<BlackHoleManager>();
+        powerUpsManager = powerUpManagerObj.GetComponent<PowerUpsManager>();
         for (int i = 0; i < highscores.Length; i++) highscores[i] = 0;
         loadData();
     }
@@ -113,6 +118,11 @@ public class GameScript : MonoBehaviour
         {
             BlackHoleSpawner bhSpawner = blackHoleSpawners[i].GetComponent<BlackHoleSpawner>();
             bhSpawner.startSpawner();
+        }
+        for (int i = 0; i < powerUpSpawners.Length; i++)
+        {
+            PowerUpsSpawner puSpawner = powerUpSpawners[i].GetComponent<PowerUpsSpawner>();
+            puSpawner.startSpawner();
         }
         isTimed = false;
         if (gameMode == GameMode.TimeAttack1)
@@ -182,6 +192,11 @@ public class GameScript : MonoBehaviour
         {
             BlackHoleSpawner bhSpawner = blackHoleSpawners[i].GetComponent<BlackHoleSpawner>();
             bhSpawner.resetSpawner();
+        }
+        for (int i = 0; i < powerUpSpawners.Length; i++)
+        {
+            PowerUpsSpawner puSpawner = powerUpSpawners[i].GetComponent<PowerUpsSpawner>();
+            puSpawner.resetSpawner();
         }
         resetShipPosition();
         spaceShip.gameObject.GetComponent<SpaceShip>().resetPowerUp();
