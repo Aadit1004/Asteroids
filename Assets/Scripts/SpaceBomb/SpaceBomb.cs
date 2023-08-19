@@ -26,12 +26,16 @@ public class SpaceBomb : MonoBehaviour
     [SerializeField] private GameObject blackHoleManagerObj;
     private BlackHoleManager blackHoleManager;
 
+    [SerializeField] private GameObject spaceBombExplosionSoundObj;
+    private AudioSource spacebombExplosionSoundEffect;
+
     void Start()
     {
         spaceBombManager = bombManagerObj.GetComponent<SpaceBombManager>();
         gameManager = gameManagerObject.GetComponent<GameScript>();
         asteroidManager = AsteroidManagerObj.GetComponent<AsteroidManager>();
         blackHoleManager = blackHoleManagerObj.GetComponent<BlackHoleManager>();
+        spacebombExplosionSoundEffect = spaceBombExplosionSoundObj.GetComponent<AudioSource>(); 
     }
 
     public void startExplosion()
@@ -48,6 +52,7 @@ public class SpaceBomb : MonoBehaviour
             explosion.transform.position = transform.position;
             explosion.Play();
         }
+        spacebombExplosionSoundEffect.Play();
         if ((Vector2.Distance(this.transform.position, spaceship.transform.position) <= 3f) && gameManager.canCollideWithThreats())
         {
             if (!(spaceship.GetComponent<SpaceShip>().shieldIsActive()))

@@ -35,16 +35,30 @@ public class GameUI : MonoBehaviour
     // Other
     [SerializeField] private GameObject newHighScoreObj;
 
-    // Main Menu
+    // Sounds
+
+    [SerializeField] private GameObject gameModeButtonObj;
+    private AudioSource gameModeButtonSoundEffect;
+
+    [SerializeField] private GameObject UiButtonObj;
+    private AudioSource UiButtonSoundEffect;
+
+    public AudioSource mainMenuSoundMusic;
 
     void Start()
     {
         gameScript = GameManager.GetComponent<GameScript>();
         playGameButtonText.text = "Play";
+        gameModeButtonSoundEffect = gameModeButtonObj.GetComponent<AudioSource>();
+        UiButtonSoundEffect = UiButtonObj.GetComponent<AudioSource>();
+        FadeInMusic();
     }
 
+
+    // Main Menu
     public void OnStartGame()
     {
+        UiButtonSoundEffect.Play();
         mainMenuUi.gameObject.SetActive(false);
         gameModesUi.gameObject.SetActive(true);
 
@@ -65,17 +79,20 @@ public class GameUI : MonoBehaviour
     }
     public void OnQuit()
     {
+        UiButtonSoundEffect.Play();
         gameScript.saveData();
         Application.Quit();
     }
     public void OnHighScore()
     {
+        UiButtonSoundEffect.Play();
         mainMenuUi.SetActive(false);
         highScoreUi.gameObject.SetActive(true);
         highScoreButtonText.text = "High Scores";
     }
     public void OnCredits()
     {
+        UiButtonSoundEffect.Play();
         mainMenuUi.gameObject. SetActive(false);
         creditsUi.gameObject.SetActive(true);
         creditsButtonText.text = "Credits";
@@ -85,6 +102,7 @@ public class GameUI : MonoBehaviour
 
     public void OnPlayAgainButton()
     {
+        gameModeButtonSoundEffect.Play();
         endScreenUi.gameObject.SetActive(false);
         newHighScoreObj.gameObject.SetActive(false);
         mainMenuUi.gameObject.SetActive(false);
@@ -94,16 +112,19 @@ public class GameUI : MonoBehaviour
 
     public void OnMainMenuButton()
     {
+        UiButtonSoundEffect.Play();
         endScreenUi.gameObject.SetActive(false);
         newHighScoreObj.gameObject.SetActive(false);
         inGameUi.gameObject.SetActive(false);
         mainMenuUi.gameObject.SetActive(true);
+        FadeInMusic();
     }
 
     // High scores
 
     public void OnHighScoreMainMenu()
     {
+        UiButtonSoundEffect.Play();
         highScoreUi.gameObject.SetActive(false);
         mainMenuUi.SetActive(true);
     }
@@ -112,50 +133,107 @@ public class GameUI : MonoBehaviour
 
     public void OnClassicMode()
     {
+        gameModeButtonSoundEffect.Play();
         gameModesUi.gameObject.SetActive(false);
         gameScript.startGame(GameMode.Classic);
         inGameUi.gameObject.SetActive(true);
         classicButtonText.text = "Classic";
+        FadeOutMusic();
     }
     public void OnTimeAttack1Mode()
     {
+        gameModeButtonSoundEffect.Play();
         gameModesUi.gameObject.SetActive(false);
         gameScript.startGame(GameMode.TimeAttack1);
         inGameUi.gameObject.SetActive(true);
         time1ButtonText.text = "Time Attack - 1 minute";
+        FadeOutMusic();
     }
     public void OnTimeAttack3Mode()
     {
+        gameModeButtonSoundEffect.Play();
         gameModesUi.gameObject.SetActive(false);
         gameScript.startGame(GameMode.TimeAttack3);
         inGameUi.gameObject.SetActive(true);
         time3ButtonText.text = "Time Attack - 3 minutes";
+        FadeOutMusic();
     }
     public void OnTimeAttack5Mode()
     {
+        gameModeButtonSoundEffect.Play();
         gameModesUi.gameObject.SetActive(false);
         gameScript.startGame(GameMode.TimeAttack5);
         inGameUi.gameObject.SetActive(true);
         time5ButtonText.text = "Time Attack - 5 minutes";
+        FadeOutMusic();
     }
     public void OnSurvivalMode()
     {
+        gameModeButtonSoundEffect.Play();
         gameModesUi.gameObject.SetActive(false);
         gameScript.startGame(GameMode.Survival);
         inGameUi.gameObject.SetActive(true);
         survivalButtonText.text = "Survival";
+        FadeOutMusic();
     }
     public void OnModesMainMenu()
     {
+        UiButtonSoundEffect.Play();
         gameModesUi.gameObject.SetActive(false);
         mainMenuUi.gameObject.SetActive(true);
     }
+
 
     // Credits 
 
     public void OnCreditsMainMenuButton()
     {
+        UiButtonSoundEffect.Play();
         creditsUi.gameObject.SetActive(false);
         mainMenuUi.gameObject.SetActive(true);
+    }
+
+    // Music
+
+    public void FadeInMusic()
+    {
+        StartCoroutine(FadeIn());
+    }
+
+    private IEnumerator FadeIn()
+    {
+        float targetVolume = 0.78f;
+        float fadeDuration = 2.2f;
+
+        mainMenuSoundMusic.volume = 0f;
+        mainMenuSoundMusic.Play();
+
+        while (mainMenuSoundMusic.volume < targetVolume)
+        {
+            mainMenuSoundMusic.volume += Time.deltaTime / fadeDuration;
+            yield return null;
+        }
+
+        mainMenuSoundMusic.volume = targetVolume;
+    }
+
+    public void FadeOutMusic()
+    {
+        StartCoroutine(FadeOut());
+    }
+
+    private IEnumerator FadeOut()
+    {
+        float fadeDuration = 0.5f;
+        float startVolume = mainMenuSoundMusic.volume;
+
+        while (mainMenuSoundMusic.volume > 0f)
+        {
+            mainMenuSoundMusic.volume -= startVolume * Time.deltaTime / fadeDuration;
+            yield return null;
+        }
+
+        mainMenuSoundMusic.Stop();
+        mainMenuSoundMusic.volume = 0f;
     }
 }

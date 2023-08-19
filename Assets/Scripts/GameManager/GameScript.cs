@@ -60,7 +60,12 @@ public class GameScript : MonoBehaviour
     private PowerUpsManager powerUpsManager;
     public GameObject[] powerUpSpawners;
 
-    // Start is called before the first frame update
+    [SerializeField] private GameObject gameOverObj;
+    private AudioSource gameOverSoundEffect;
+
+    [SerializeField] private GameObject spaceShipExplosionSoundObj;
+    private AudioSource spaceShipExplosionSoundEffect;
+
     void Start()
     {
         startPosition = spaceShip.transform.position;
@@ -69,6 +74,8 @@ public class GameScript : MonoBehaviour
         spaceBombManager = SpacebombManagerObj.GetComponent<SpaceBombManager>();
         blackHoleManager = blackHoleManagerObj.GetComponent<BlackHoleManager>();
         powerUpsManager = powerUpManagerObj.GetComponent<PowerUpsManager>();
+        gameOverSoundEffect = gameOverObj.GetComponent<AudioSource>();
+        spaceShipExplosionSoundEffect = spaceShipExplosionSoundObj.GetComponent<AudioSource>();
         for (int i = 0; i < highscores.Length; i++) highscores[i] = 0;
         loadData();
     }
@@ -178,6 +185,7 @@ public class GameScript : MonoBehaviour
         asteroidManager.clearAsteroidsList();
         spaceBombManager.clearBombList();
         blackHoleManager.clearBlackHolesList();
+        powerUpsManager.clearPowerUpsList();
         for (int i = 0; i < Spawners.Length; i++)
         {
             AsteroidSpawner spawner = Spawners[i].GetComponent<AsteroidSpawner>();
@@ -220,7 +228,7 @@ public class GameScript : MonoBehaviour
     {
         if (lives == 0 || (isGameActive() && timeRemaining == 0f && isTimed))
         {
-            // death animation and sound of ship
+            gameOverSoundEffect.Play();
             updateScores(score, currentMode);
             endScreenScoreText.text = "Score: " + score;
             String highScoreText = String.Empty;
@@ -271,6 +279,7 @@ public class GameScript : MonoBehaviour
 
     public void respawnShip()
     {
+        spaceShipExplosionSoundEffect.Play();
         this.explosion.transform.position = spaceShip.transform.position;
         spaceShip.gameObject.SetActive(false);
         this.explosion.Play();

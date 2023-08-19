@@ -37,22 +37,6 @@ public class BlackHole : MonoBehaviour
     {
         if (gameManager.isGameActive())
         {
-            //float distance = Vector2.Distance(this.transform.position, spaceShip.transform.position);
-            //if (distance <= 5f && gameManager.canCollideWithThreats())
-            //{
-            //    Vector2 direction = (this.transform.position - spaceShip.transform.position).normalized; //  direction from the spaceship to the black hole
-            //    float forceMagnitude = (5 - distance) * 0.75f; // force magnitude increases as ship gets closer, linear increase
-            //    Vector2 gravitationalForce = direction * forceMagnitude; // vector of gravity direction
-            //    spaceShip.GetComponent<Rigidbody2D>().AddForce(gravitationalForce);
-            //    if (distance < 0.2f && !isShipDead)
-            //    {
-            //        isShipDead = true;
-            //        gameManager.suckedInBlackHolde();
-            //        spaceshipExplosion.transform.position = spaceShip.transform.position;
-            //        spaceshipExplosion.Play();
-            //        gameManager.respawnShip();
-            //    }
-            //}
 
             Collider2D[] affectedObjects = Physics2D.OverlapCircleAll(this.transform.position, 5f); // Query all objects within radius of 5 units
 

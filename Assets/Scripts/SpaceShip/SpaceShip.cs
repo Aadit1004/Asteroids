@@ -42,6 +42,21 @@ public class SpaceShip : MonoBehaviour
     Coroutine powerUpCoroutineTimer;
     bool isCoroutineRunning = false;
 
+    [SerializeField] private GameObject dullHitObj;
+    private AudioSource dullHitSoundEffect;
+
+    [SerializeField] private GameObject powerUpSoundObj;
+    private AudioSource powerUpSoundEffect;
+
+    [SerializeField] private GameObject missileShotSoundObj;
+    private AudioSource missileShotSoundEffect;
+
+    [SerializeField] private GameObject powerUpManagerObj;
+    private PowerUpsManager powerUpsManager;
+
+    public ParticleSystem blueExplosion;
+    public ParticleSystem redExplosion;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();   
@@ -50,6 +65,9 @@ public class SpaceShip : MonoBehaviour
         spaceBombManager = bombManagerObj.GetComponent<SpaceBombManager>();
         powerUpsManager = powerUpManagerObj.GetComponent<PowerUpsManager>();
         currentPowerUp = PowerUp.None;
+        dullHitSoundEffect = dullHitObj.GetComponent<AudioSource>();
+        powerUpSoundEffect = powerUpSoundObj.GetComponent<AudioSource>();
+        missileShotSoundEffect = missileShotSoundObj.GetComponent<AudioSource>();
     }
 
     void Update()
@@ -94,12 +112,11 @@ public class SpaceShip : MonoBehaviour
             {
                 if (currentPowerUp == PowerUp.BurstFire && isPowerUpActive)
                 {
-                    // start coroutine
-                    // reset powerup to none and isPowerUpActive = false
                     StartCoroutine(burstFireDelay());
                 }
                 else
                 {
+                    missileShotSoundEffect.Play();
                     Vector2 spawnPosition = transform.position + transform.up * spawnDistance;
                     GameObject newMissile = Instantiate(missile, spawnPosition, Quaternion.identity);
                     newMissile.GetComponent<Rigidbody2D>().velocity = GetFacingDirection() * missileSpeed;
@@ -151,6 +168,7 @@ public class SpaceShip : MonoBehaviour
         int count = 3;
         while (count > 0)
         {
+            missileShotSoundEffect.Play();
             Vector2 spawnPosition = transform.position + transform.up * spawnDistance;
             GameObject newMissile = Instantiate(missile, spawnPosition, Quaternion.identity);
             newMissile.GetComponent<Rigidbody2D>().velocity = GetFacingDirection() * missileSpeed;
@@ -217,20 +235,14 @@ public class SpaceShip : MonoBehaviour
                 gameManager.respawnShip();
             }
         }
-    }
 
 
-    [SerializeField] private GameObject powerUpManagerObj;
-    private PowerUpsManager powerUpsManager;
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        GameObject other = collision.gameObject;
+        // prev triggerenter2d code
 
         //checkPowerUp(collision.gameObject); // uncomment if want spaceship to pickup powerups if clashing into each other
-
         if (other.tag == "TimeDilation" || other.tag == "Shield" || other.tag == "BurstFire")
         {
+            dullHitSoundEffect.Play();
             powerUpsManager.removePowerUp(other);
             redExplosion.transform.position = other.transform.position;
             redExplosion.Play();
@@ -238,8 +250,7 @@ public class SpaceShip : MonoBehaviour
         }
     }
 
-    public ParticleSystem blueExplosion;
-    public ParticleSystem redExplosion;
+
 
     public void checkPowerUp(GameObject other)
     {
@@ -247,6 +258,7 @@ public class SpaceShip : MonoBehaviour
         {
             if (currentPowerUp == PowerUp.None)
             {
+                powerUpSoundEffect.Play();
                 currentPowerUp = PowerUp.TimeDilation;
                 powerUpsManager.removePowerUp(other);
                 blueExplosion.transform.position = other.transform.position;
@@ -255,6 +267,7 @@ public class SpaceShip : MonoBehaviour
             } 
             else
             {
+                dullHitSoundEffect.Play();
                 powerUpsManager.removePowerUp(other);
                 redExplosion.transform.position = other.transform.position;
                 redExplosion.Play();
@@ -266,6 +279,7 @@ public class SpaceShip : MonoBehaviour
         {
             if (currentPowerUp == PowerUp.None)
             {
+                powerUpSoundEffect.Play();
                 currentPowerUp = PowerUp.Shield;
                 powerUpsManager.removePowerUp(other);
                 blueExplosion.transform.position = other.transform.position;
@@ -274,6 +288,7 @@ public class SpaceShip : MonoBehaviour
             }
             else
             {
+                dullHitSoundEffect.Play();
                 powerUpsManager.removePowerUp(other);
                 redExplosion.transform.position = other.transform.position;
                 redExplosion.Play();
@@ -284,6 +299,7 @@ public class SpaceShip : MonoBehaviour
         {
             if (currentPowerUp == PowerUp.None)
             {
+                powerUpSoundEffect.Play();
                 currentPowerUp = PowerUp.BurstFire;
                 powerUpsManager.removePowerUp(other);
                 blueExplosion.transform.position = other.transform.position;
@@ -292,6 +308,7 @@ public class SpaceShip : MonoBehaviour
             }
             else
             {
+                dullHitSoundEffect.Play();
                 powerUpsManager.removePowerUp(other);
                 redExplosion.transform.position = other.transform.position;
                 redExplosion.Play();

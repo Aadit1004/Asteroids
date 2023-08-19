@@ -13,7 +13,7 @@ public class powUpScript : MonoBehaviour
         powerUpsManager = powerUpManagerObj.GetComponent<PowerUpsManager>();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         GameObject other = collision.gameObject;
 
@@ -23,4 +23,5 @@ public class powUpScript : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
 }
