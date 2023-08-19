@@ -1,9 +1,8 @@
-using System;
 using System.Collections;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.Tilemaps;
 using UnityEngine;
+using System;
+using Unity.VisualScripting;
 
 public enum PowerUp
 {
@@ -16,8 +15,8 @@ public enum PowerUp
 public class SpaceShip : MonoBehaviour
 {
     private Rigidbody2D rb;
-    private float rotationAmount = 30f;
-    private float thrustAmount = 1.3f;
+    private float rotationAmount = 75f; // 30f old val
+    private float thrustAmount = 5f; //1.3f old val
     private const float maxThrust = 5;
     private float maxAngularVelocity = 200f;
 
@@ -88,7 +87,8 @@ public class SpaceShip : MonoBehaviour
                 {
                     // If the current angular velocity exceeds the maximum, set the angular velocity to the maximum, preserving the sign
                     rb.angularVelocity = maxAngularVelocity * Mathf.Sign(rb.angularVelocity);
-                } else
+                }
+                else
                 {
                     rb.AddTorque(-rotationAmount * Time.fixedDeltaTime);
                 }
@@ -108,8 +108,8 @@ public class SpaceShip : MonoBehaviour
             {
                 if (rb.velocity.magnitude > maxThrust)
                 {
-                    rb.velocity = rb.velocity.normalized * maxThrust;    
-                } 
+                    rb.velocity = rb.velocity.normalized * maxThrust;
+                }
                 else
                 {
                     rb.AddForce(GetFacingDirection() * thrustAmount);
@@ -128,7 +128,7 @@ public class SpaceShip : MonoBehaviour
                     GameObject newMissile = Instantiate(missile, spawnPosition, Quaternion.identity);
                     newMissile.GetComponent<Rigidbody2D>().velocity = GetFacingDirection() * missileSpeed;
                 }
-                
+
             } // fire missile
             if (Input.GetKey(KeyCode.E) && currentPowerUp != PowerUp.None) 
             {
@@ -158,6 +158,61 @@ public class SpaceShip : MonoBehaviour
         }
     }
 
+    //private void FixedUpdate()
+    //{
+    //    if (gameManager.isGameActive())
+    //    {
+    //        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+    //        {
+    //            if (Mathf.Abs(rb.angularVelocity) > maxAngularVelocity)
+    //            {
+    //                // If the current angular velocity exceeds the maximum, set the angular velocity to the maximum, preserving the sign
+    //                rb.angularVelocity = maxAngularVelocity * Mathf.Sign(rb.angularVelocity);
+    //            }
+    //            else
+    //            {
+    //                rb.AddTorque(-rotationAmount * Time.fixedDeltaTime);
+    //            }
+    //        } // rotate right
+    //        else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+    //        {
+    //            if (Mathf.Abs(rb.angularVelocity) > maxAngularVelocity)
+    //            {
+    //                rb.angularVelocity = maxAngularVelocity * Mathf.Sign(rb.angularVelocity);
+    //            }
+    //            else
+    //            {
+    //                rb.AddTorque(rotationAmount * Time.fixedDeltaTime);
+    //            }
+    //        } // rotate left
+    //        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+    //        {
+    //            if (rb.velocity.magnitude > maxThrust)
+    //            {
+    //                rb.velocity = rb.velocity.normalized * maxThrust;
+    //            }
+    //            else
+    //            {
+    //                rb.AddForce(GetFacingDirection() * thrustAmount);
+    //            }
+    //        } // add thrust
+    //        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
+    //        {
+    //            if (currentPowerUp == PowerUp.BurstFire && isPowerUpActive)
+    //            {
+    //                StartCoroutine(burstFireDelay());
+    //            }
+    //            else
+    //            {
+    //                missileShotSoundEffect.Play();
+    //                Vector2 spawnPosition = transform.position + transform.up * spawnDistance;
+    //                GameObject newMissile = Instantiate(missile, spawnPosition, Quaternion.identity);
+    //                newMissile.GetComponent<Rigidbody2D>().velocity = GetFacingDirection() * missileSpeed;
+    //            }
+
+    //        } // fire missile
+    //    }
+    //}
 
     private void displayText()
     {
