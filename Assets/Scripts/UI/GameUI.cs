@@ -202,8 +202,8 @@ public class GameUI : MonoBehaviour
 
     private IEnumerator FadeIn()
     {
-        float targetVolume = 0.78f;
-        float fadeDuration = 2.2f;
+        float targetVolume = 0.7f;
+        float fadeDuration = 2f;
 
         mainMenuSoundMusic.volume = 0f;
         mainMenuSoundMusic.Play();

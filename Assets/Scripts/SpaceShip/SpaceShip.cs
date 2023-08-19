@@ -57,6 +57,12 @@ public class SpaceShip : MonoBehaviour
     public ParticleSystem blueExplosion;
     public ParticleSystem redExplosion;
 
+    public TMP_Text powerUpText;
+    public TMP_Text powerUpStatusText;
+
+    [SerializeField] private GameObject powerUpStartObj;
+    private AudioSource powerUpStartSoundEffect;
+    private bool playedAlready = false;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();   
@@ -68,6 +74,7 @@ public class SpaceShip : MonoBehaviour
         dullHitSoundEffect = dullHitObj.GetComponent<AudioSource>();
         powerUpSoundEffect = powerUpSoundObj.GetComponent<AudioSource>();
         missileShotSoundEffect = missileShotSoundObj.GetComponent<AudioSource>();
+        powerUpStartSoundEffect = powerUpStartObj.GetComponent<AudioSource>();
     }
 
     void Update()
@@ -125,6 +132,13 @@ public class SpaceShip : MonoBehaviour
             } // fire missile
             if (Input.GetKey(KeyCode.E) && currentPowerUp != PowerUp.None) 
             {
+                if (!playedAlready)
+                {
+                    powerUpStartSoundEffect.Play();
+                    playedAlready = true;
+                }
+                powerUpStatusText.text = "Active";
+                powerUpStatusText.color = Color.green;
                 isPowerUpActive = true;
                 switch (currentPowerUp)
                 {
@@ -144,18 +158,27 @@ public class SpaceShip : MonoBehaviour
         }
     }
 
-    #region Delete Later
-
-    public TMP_Text boolVal;
-    public TMP_Text currentVal;
 
     private void displayText()
     {
-        boolVal.text = "isPowerUpActive: " + isPowerUpActive;
-        currentVal.text = "Current PowerUp: " + currentPowerUp;
+        string currPowerUp = string.Empty;
+        switch (currentPowerUp)
+        {
+            case PowerUp.None:
+                currPowerUp = "None";
+                break;
+            case PowerUp.Shield:
+                currPowerUp = "Shield";
+                break;
+            case PowerUp.BurstFire:
+                currPowerUp = "Burst Fire";
+                break;
+            case PowerUp.TimeDilation:
+                currPowerUp = "Time Dilation";
+                break;
+        }
+        powerUpText.text = "Current Power-Up Equipped: " + currPowerUp;
     }
-
-    #endregion
 
     private void activateTimeDilation()
     {
@@ -190,6 +213,9 @@ public class SpaceShip : MonoBehaviour
         isPowerUpActive = false;
         powerUpDuration = 0.0f;
         isCoroutineRunning = false;
+        powerUpStatusText.text = "Not Active";
+        powerUpStatusText.color = Color.red;
+        playedAlready = false;
     }
 
     private Vector2 GetFacingDirection()
@@ -328,7 +354,9 @@ public class SpaceShip : MonoBehaviour
         currentPowerUp = PowerUp.None;
         isPowerUpActive = false;
         powerUpDuration = 0.0f;
-        // stop powerup coroutines and timers
+        powerUpStatusText.text = "Not Active";
+        powerUpStatusText.color = Color.red;
+        playedAlready = false;
     }
 
     public bool shieldIsActive() { return currentPowerUp == PowerUp.Shield && isPowerUpActive; }

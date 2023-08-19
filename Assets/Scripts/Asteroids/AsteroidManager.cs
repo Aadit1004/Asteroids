@@ -9,18 +9,11 @@ public class AsteroidManager : MonoBehaviour
     private int currentAsteroids;
     private List<GameObject> lofAsteroid = new List<GameObject>();
 
-    public TMP_Text tempText;
-
     // Start is called before the first frame update
     void Start()
     {
         currentAsteroids = 0;
         tempMax = maxAsteroids;
-    }
-
-    private void Update()
-    {
-        tempText.text = "Max Asteroids: " + maxAsteroids;
     }
 
     public int getMaxAsteroids() { return  maxAsteroids; }
