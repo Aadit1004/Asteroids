@@ -23,6 +23,19 @@ public class BlackHole : MonoBehaviour
     bool isShipDead = false;
     bool cooldown = false;
 
+    [SerializeField] private GameObject smallAstSoundObj;
+    private AudioSource smallAstSoundEffect;
+
+    [SerializeField] private GameObject largeAstSoundObj;
+    private AudioSource largeAstSoundEffect;
+
+    public ParticleSystem redExplosion;
+    [SerializeField] private GameObject powerUpManagerObj;
+    private PowerUpsManager powerUpsManager;
+
+    [SerializeField] private GameObject powerUpSoundObj;
+    private AudioSource powerUpSoundEffect;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +43,10 @@ public class BlackHole : MonoBehaviour
         gameManager = gameManagerObject.GetComponent<GameScript>();
         spaceBombManager = spaceBombManagerObj.GetComponent<SpaceBombManager>();
         blackHoleManager = blackHoleManagerObj.GetComponent<BlackHoleManager>();
+        largeAstSoundEffect = largeAstSoundObj.GetComponent<AudioSource>();
+        smallAstSoundEffect = smallAstSoundObj.GetComponent<AudioSource>();
+        powerUpsManager = powerUpManagerObj.GetComponent<PowerUpsManager>();
+        powerUpSoundEffect = powerUpSoundObj.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -75,17 +92,46 @@ public class BlackHole : MonoBehaviour
                         if (distance < 1f && !cooldown && (other.tag == "AsteroidSmall" || other.tag == "SpaceBomb" || other.tag == "AsteroidBig"))
                         {
                             cooldown = true;
-                            if (other.tag == "AsteroidBig" || other.tag == "AsteroidSmall")
+                            if (other.tag == "AsteroidSmall")
                             {
+                                smallAstSoundEffect.Play();
+                                asteroidManager.removeAsteroid(other.gameObject);
+                            }
+                            if (other.tag == "AsteroidBig")
+                            {
+                                largeAstSoundEffect.Play();
                                 asteroidManager.removeAsteroid(other.gameObject);
                             } 
                             else if (other.tag == "SpaceBomb")
                             {
+                                largeAstSoundEffect.Play();
                                 spaceBombManager.removeBomb(other.gameObject);
                             }
                             spaceshipExplosion.transform.position = other.transform.position;
                             Destroy(other);
                             spaceshipExplosion.Play();
+                            StartCoroutine(delayCooldown());
+                        }
+                    }
+                }
+                if (col.gameObject.tag == "TimeDilation" || col.gameObject.tag == "Shield" || col.gameObject.tag == "BurstFire")
+                {
+                    GameObject other = col.gameObject;
+                    float distance = Vector2.Distance(this.transform.position, other.transform.position);
+                    if (distance <= 5f)
+                    {
+                        Vector2 direction = (this.transform.position - other.transform.position).normalized;
+                        float forceMagnitude = (5 - distance) * 1.05f;
+                        Vector2 gravitationalForce = direction * forceMagnitude;
+                        other.GetComponent<Rigidbody2D>().AddForce(gravitationalForce);
+                        if (distance < 1f && !cooldown && (other.tag == "TimeDilation" || other.tag == "Shield" || other.tag == "BurstFire"))
+                        {
+                            cooldown = true;
+                            powerUpSoundEffect.Play();
+                            powerUpsManager.removePowerUp(other.gameObject);
+                            redExplosion.transform.position = other.transform.position;
+                            Destroy(other);
+                            redExplosion.Play();
                             StartCoroutine(delayCooldown());
                         }
                     }
