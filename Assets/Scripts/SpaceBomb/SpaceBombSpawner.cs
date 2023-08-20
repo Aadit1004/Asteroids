@@ -52,7 +52,7 @@ public class SpaceBombSpawner : MonoBehaviour
                 {
                     Rigidbody2D rb = newBomb.GetComponent<Rigidbody2D>();
                     Vector2 tempDirection = rb.velocity.normalized;
-                    float newSpeed = rb.velocity.magnitude * 0.4f;
+                    float newSpeed = rb.velocity.magnitude * 1.2f;
                     rb.AddForce(new Vector2(-tempDirection.x, -tempDirection.y) * newSpeed);
                 }
                 spaceBombManager.addBomb(newBomb);

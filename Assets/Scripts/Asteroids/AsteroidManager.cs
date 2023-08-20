@@ -49,7 +49,7 @@ public class AsteroidManager : MonoBehaviour
         {
             Rigidbody2D rb = ast.gameObject.GetComponent<Rigidbody2D>();
             Vector2 direction = rb.velocity.normalized;
-            float newSpeed = rb.velocity.magnitude * 0.4f;
+            float newSpeed = rb.velocity.magnitude * 1.2f;
             rb.AddForce(new Vector2(-direction.x, -direction.y) * newSpeed);
         }
     }
@@ -60,7 +60,7 @@ public class AsteroidManager : MonoBehaviour
         {
             Rigidbody2D rb = ast.gameObject.GetComponent<Rigidbody2D>();
             Vector2 direction = rb.velocity.normalized;
-            float newSpeed = rb.velocity.magnitude * 0.4f;
+            float newSpeed = rb.velocity.magnitude * 1.2f;
             rb.AddForce(new Vector2(direction.x, direction.y) * newSpeed);
         }
     }

@@ -16,7 +16,7 @@ public class SpaceShip : MonoBehaviour
 {
     private Rigidbody2D rb;
     private float rotationAmount = 75f; // 30f old val
-    private float thrustAmount = 5f; //1.3f old val
+    private float thrustAmount = 6f; //1.3f old val
     private const float maxThrust = 5;
     private float maxAngularVelocity = 200f;
 

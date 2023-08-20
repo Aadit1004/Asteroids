@@ -55,7 +55,7 @@ public class PowerUpsSpawner : MonoBehaviour
                 {
                     powerupObj = timeDilationObj;
                 }
-                GameObject newPowerUp = Instantiate(powerupObj, spawnPos, Quaternion.identity);
+                GameObject newPowerUp = Instantiate(timeDilationObj, spawnPos, Quaternion.identity);
 
                 Vector2 direction = getDirection();
                 float powerUpSpeed = Random.Range(1.5f, 3f);
